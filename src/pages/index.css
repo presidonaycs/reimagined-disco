@@ -1,0 +1,43 @@
+* {
+  margin: 0;
+  padding:0;
+}
+
+h1, h2, h3, h4, h5, h6, p,
+div, header, section{
+  margin: 0;
+  padding: 0;
+}
+.flex-between{
+  display: flex;
+  justify-content: space-between;
+  /* align-items: center; */
+}
+.flex{
+  display: flex;
+}
+.flex-align{
+  display: flex;
+  align-items: center;
+}
+.flex-align-top{
+  display: flex;
+  align-items: top;
+}
+
+/* .page44 p{
+  margin:0;
+  padding: 0;
+} */
+/* .check{
+  margin-bottom: 0;
+  padding-bottom: 0;
+} */
+
+.ant-table .ant-table-thead>tr>th {
+  background-color: #43425D;
+  color:white
+}
+.ant-input-affix-wrapper>input[type=text] {
+  background-color: #D5FFD5;
+}
