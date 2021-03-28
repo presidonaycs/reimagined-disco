@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { RiAddLine } from 'react-icons/ri';
 import { BiEditAlt } from 'react-icons/bi';
 import { GiTrashCan } from 'react-icons/gi';
-import { RiAddLine } from 'react-icons/ri';
+
 import SearchInput from '../inputs/SearchInput';
 import LocationDetails from '../layouts/LocationDetails';
 import OrganogramForm from '../layouts/OrganogramForm';
-
 
 const SupervisorOrganogram = ({ history, details = {} }) => {
   const [showFormModal, setShowFormModal] = useState(false);

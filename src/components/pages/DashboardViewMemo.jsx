@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Button, Box, Divider, FormControl, FormHelperText, Grid, InputLabel, makeStyles, MenuItem, Select, TextField, withStyles, Paper, SvgIcon, Container } from '@material-ui/core';
 import { IoMdClose } from 'react-icons/io';
+import Request from './../MainMemo1'
+import MemoSide from './../MemoSide'
+import DashboardRequest from './../DashboardRequest'
+
+import http from './../../httpCommon'
+import ApprovalJourney from '../../ApprovalJourney';
 import MemoSideDashboard from '../MemoSideDashboard';
-import DashboardRequest from './../DashboardRequest';
-import Cookies from "universal-cookie";
-
-
 
 var InitiatedRequest = 7786790;
 var CompletedRequest = 7786790;
@@ -68,12 +71,12 @@ const DashboardViewMemo = (props) => {
                 <div className='col' >
                   <div style={{ fontWeight: 'bold', fontFamily: 'auto' }}>Facility Request Management</div>
                   <div className='col col-lg-2' style={{ width: '300px', height: 'auto' }}>
-                    <MemoSideDashboard rows1={props.data} sequence1={props?.sequence}/>
+                    <MemoSideDashboard rows1={props.data} />
                   </div>
                 </div>
 
                 <div className='col col-lg-10' style={{ width: '680px', marginLeft: '0.3vw' }} >
-                  <DashboardRequest rows1={props.data} docs={docs} journey={props.journey}/>
+                  <DashboardRequest rows1={props.data} docs={docs} />
                 </div>
               </div>
             </div>

@@ -357,8 +357,8 @@ class Tech16 extends React.Component {
 
             <div style={{width:'100%', display:'flex', justifyContent:'center'}}>
             <div style={{width:"70%"}}>
-                <div style={{ padding: "15px", backgroundColor: "#D5FFD5", boxShadow: "0 2px 6px", color: "#43425D" }}>{this.props.row?.subject || "technical details"}</div>
-                <div><TextArea rows={8} value={this.props.tech?.technicalReview} style={{ width: "100%" }} disabled /></div>
+                <div style={{ padding: "15px", backgroundColor: "#D5FFD5", boxShadow: "0 2px 6px", color: "#43425D" }}>{this.props.tech?.technicalReview}</div>
+                <div><TextArea rows={8} placeholder="Repair Details/Report" style={{ width: "100%" }} /></div>
 
                 <div style={{ padding: "15px", textAlign: "left", backgroundColor: "#EFEFEF", boxShadow: "0 2px 6px", color: "#43425D", }}>Add Items Required</div>
 

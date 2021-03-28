@@ -1,6 +1,6 @@
+import React from 'react'
+import { Upload, Button } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import { Button, Upload } from 'antd';
-import React from 'react';
 
 class ImgUpload extends React.Component {
   state = {

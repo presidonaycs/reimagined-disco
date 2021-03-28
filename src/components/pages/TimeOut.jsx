@@ -2,6 +2,7 @@ import { Button, makeStyles, Typography, withStyles } from '@material-ui/core';
 import React, { useState } from 'react';
 import { GiEmptyHourglass } from 'react-icons/gi';
 import { IoMdClose } from 'react-icons/io';
+import hourglass from './../images/hourglass-split.svg'
 
 const BooButton = withStyles({
   root: {

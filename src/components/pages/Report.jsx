@@ -1,22 +1,22 @@
-import { Badge, Button } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+import React, { useEffect, useState } from 'react';
+import dom from 'react-dom';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
+import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import { Table } from 'antd';
-import React, { useEffect, useState } from 'react';
-import SplittedButton from '../../input/SplitButton';
-import SearchInput from '../inputs/SearchInput';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import LensIcon from '@material-ui/icons/Lens'
+import http from './../../httpCommon'
+import { Badge, Button, InputAdornment, MenuItem, Select, TextField } from '@material-ui/core';
 import LocationDetails from '../layouts/LocationDetails';
-import http from './../../httpCommon';
+import SearchInput from '../inputs/SearchInput';
+import SplitButton from '../../input/SplitButton';
 import Page10 from './Page10';
-import ViewMemoForm from './ViewMemoForm';
-import SplitsButton from './../../input/SplitsButton'
-import Cookies from "universal-cookie";
-import LensIcon from '@material-ui/icons/Lens';
-
-
+import ViewMemoForm from './ViewMemoForm'
+import { Table } from 'antd';
 
 
 
@@ -119,23 +119,18 @@ const useStyles = makeStyles({
 
 
 
+function createData(items, requestInitiator, Agency, Amount, PaymentStatus, DateRecieved, Action) {
 
-const chkStatus = (status) => {
-  if (status === 'Approved')
-    return { color: '#0DAC26', margin: '2px', font:"normal normal normal 17px/25px Avenir" }
-  else if (status === 'Pending')
-    return { color: '#FDCC29', margin: '2px', font:"normal normal normal 17px/25px Avenir" }
-    else if (status === 'Rejected')
-    return { color: '#EF0621', margin: '2px', font:"normal normal normal 17px/25px Avenir" }
+  return { items, requestInitiator, Agency, Amount, PaymentStatus,DateRecieved, Action };
 }
 
-const statusText =(status)=>{
-if(status === 'Approved')
-  return "Approved"
-else if(status === "Pending")
-  return "Pending"
-else if(status === "Rejected")
-  return "Rejected"
+const chkStatus = (status) => {
+  if (status === 1)
+    return { color: 'yellow', margin: '2px', fontSize: '12px' }
+  else if (status === 2)
+    return { color: 'red', margin: '2px', fontSize: '10px' }
+  else
+    return { color: 'green', margin: '2px', fontSize: '10px' }
 }
 
 
@@ -157,13 +152,6 @@ const FacMaintenance7 = () => {
   let [requestID, setRequestID] = React.useState(null);
   var [formState, setFormState] = useState(false);
   var [memoState, setMemoState] = useState(false);
-  let [typedValue, setTypedValue] = useState('')
-
-
-
- 
-
-
 
 
   var InitiatedRequest = 7786790;
@@ -178,9 +166,6 @@ const FacMaintenance7 = () => {
   var numb = 78943
   var grade = 'Grade level 8'
   var descriptions = 'sorry its ovaaaaaaaaaaaaaaaaaa'
-
-
-  let cookie = new Cookies();
 
   let sendRequestId=(e)=>{
     const req = e.currentTarget.getAttribute('data-item')
@@ -208,7 +193,7 @@ const FacMaintenance7 = () => {
   }
 
   const fetchData = async () => {
-    let url = 'Reports' 
+    let url = 'Technical-Review' 
   
     console.log(url)
     http.get(url)
@@ -217,7 +202,7 @@ const FacMaintenance7 = () => {
         console.log(response.data)
         setRows(response.data.data)
   
-        setIsCount((response.data.count)?.toString()??0)
+        setIsCount((response.data.count).toString())
   
   
   
@@ -257,15 +242,11 @@ const FacMaintenance7 = () => {
     {
       title: 'Approval Status',
       dataIndex: 'approvalStatus',
-      render:(text,record,index) => <div><span style={{marginTop:'8px'}}><LensIcon style={chkStatus(record.approvalStatus)}/></span> <span >{statusText(record.approvalStatus)}</span></div>
-
     },
     
     {
       title: 'Action',
       dataIndex: 'action',
-      render:(text) => <SplitsButton/>
-      
     }
   ];
 
@@ -278,7 +259,6 @@ const FacMaintenance7 = () => {
       requestType: it.requestType,
       cost: it.cost,
       approvalStatus: it.approvalStatus,
-      approvalstatusId: it.approvalstatusId
     }
   ))
   
@@ -286,31 +266,32 @@ const FacMaintenance7 = () => {
 
   return (
     
+  
+
     <div style={{ width: '100%' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div>
-          <div>Good Morning</div>
-          <div style={{ fontSize: '23px' }}>{cookie.get("firstName")} {cookie.get("lastName")}; #{cookie.get("staffNumber")}</div>
 
-          <div>{cookie.get("role")} {cookie.get("mda")} | {grade}</div>
+          <div>Good Morning</div>
+          <div style={{ fontSize: '23px' }}>Osagie Osaigbovo; #{numb}</div>
+
+          <div>{post} {ministry} | {grade}</div>
         </div>
         <div>
           <LocationDetails />
         </div>
-        {console.log('passed')}
-        
       </div>
-     
+      <div style={{ marginLeft: '46%', marginBottom: '1%' }} className='row'>
+        <div style={{ marginRight: '107px', width: '150px' }}><SplitButton /></div>
+        <SearchInput  className='col-sm-3' style={{ width: '100%', placeholder:'search transactions, invoices or help' }} />
+      </div>
       <Grid container justify='center' >
         <Grid item sm={11}>
-        <div style={{display:'flex',justifyContent:'flex-end'}}>
-            <div style={{width: '250px',margin:'8px' }}><SplittedButton /></div>
-            <SearchInput style={{marginRight:'16px'}}  onChange={e=>setTypedValue(e.target.value)} value={typedValue}/>
-              </div>
+
           <TableContainer component={Paper} style={{ width: '100%' }}>
             <div className={classes.clDiv}>
               <Badge badgeContent={isCount} showZero color='error'>
-                <div style={{paddingRight:'14px', fontWeight:'bold'}}>
+                <div style={{paddingRight:'14px', fontWeight:'bold', fontFamily:'auto'}}>
                  Facility Maintenance Request Management
                 </div>
               </Badge>

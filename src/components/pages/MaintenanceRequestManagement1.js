@@ -1,6 +1,4 @@
-import { Badge, Button } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+import React from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -8,9 +6,17 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import React from 'react';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import LensIcon from '@material-ui/icons/Lens'
 import StyledMenu from "./../components/MenuButton";
-import SearchInput from './../input/SearchInput';
+import FormSearchInput from './../input/FormSearchInput'
+import SearchInput from './../input/SearchInput'
+import SelectInput from './../input/SelectInput'
+import TextInput from './../input/TextInput'
+import { Badge, Button, InputAdornment, MenuItem, Select, TextField } from '@material-ui/core';
+import { SearchOutlined } from '@material-ui/icons';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 const BootstrapButton = withStyles({
   root: {

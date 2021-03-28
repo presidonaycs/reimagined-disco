@@ -1,0 +1,394 @@
+@import url('https://fonts.googleapis.com/css?family=Avenir:400,600,700');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-size: 0.9rem;
+  overflow-x: hidden;
+  color: #393939;
+  background-color: #fff;
+  font-family: 'Avenir', Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6, p,
+div, header, section {
+  margin: 0;
+}
+
+button, input {
+  border: none;
+  outline: none;
+}
+
+section {
+  width: 100%;
+  margin: 0;
+}
+
+.p-r {
+  position: relative!important;
+}
+
+.no-padding {
+  padding: 0!important;
+}
+.p-20 {
+  padding: 20px!important;
+}
+.p-40 {
+  padding: 40px!important;
+}
+.p-t-40 {
+  padding-top: 40px!important;
+}
+.p-r-5 {
+  padding-right: 5px!important;
+}
+.p-l-5 {
+  padding-left: 5px!important;
+}
+
+.no-margin {
+  margin: 0!important;
+}
+.m-l-5 {
+  margin-left: 5px!important;
+}
+.m-l-10 {
+  margin-left: 10px!important;
+}
+.m-l-20 {
+  margin-left: 20px!important;
+}
+.m-r-5 {
+  margin-right: 5px!important;
+}
+.m-t-10 {
+  margin-top: 10px!important;
+}
+.m-t-20 {
+  margin-top: 20px!important;
+}
+.m-t--20 {
+  margin-top: -20px!important;
+}
+.m-t-40 {
+  margin-top: 40px!important;
+}
+.m-t-5 {
+  margin-top: 5px!important;
+}
+.m-b-5 {
+  margin-bottom: 5px!important;
+}
+.m-b-10 {
+  margin-bottom: 10px!important;
+}
+.m-b-20 {
+  margin-bottom: 20px!important;
+}
+.m-b-40 {
+  margin-bottom: 40px!important;
+}
+.m-b-50 {
+  margin-bottom: 50px!important;
+}
+
+.no-border {
+  border: none!important;
+}
+.no-wrap {
+  flex-wrap: nowrap!important;
+}
+.wrap {
+  flex-wrap: wrap!important;
+}
+.flex {
+  display: flex!important;
+}
+.flex-h-center {
+  justify-content: center!important;
+}
+.flex-v-center {
+  align-items: center!important;
+}
+.pointer {
+  cursor: pointer!important;
+}
+.underline {
+  text-decoration: underline!important;
+}
+.center-text {
+  text-align: center!important;
+}
+.right-text {
+  text-align: right!important;
+}
+.space-between {
+  justify-content: space-between!important;
+}
+.float-right {
+  float: right!important;
+}
+.inline-block {
+  display: inline-block!important;
+}
+.bold-text {
+  font-weight: bold!important;
+}
+
+.max-w-400 {
+  max-width: 400px!important;
+}
+
+.col-1, .col-2, .col-3, .col-4,
+.col-5, .col-6, .col-half, .col-7, .col-8,
+.col-9, .col-10, .col-11, .col-12 {
+  display: inline-block;
+  position: relative;
+  padding-right: 10px;
+  padding-left: 10px;
+  margin-bottom: 20px;
+}
+.col-1 {
+  width: 8.33%;
+}
+.col-2 {
+  width: 16.66%;
+}
+.col-3 {
+  width: 25%;
+}
+.col-4 {
+  width: 33.33%;
+}
+.col-5 {
+  width: 41.65%;
+}
+.col-6, .col-half {
+  width: 50%;
+}
+.col-7 {
+  width: 58.33%;
+}
+.col-8 {
+  width: 66.66%;
+}
+.col-9 {
+  width: 75%;
+}
+.col-10 {
+  width: 83.33%;
+}
+.col-11 {
+  width: 91.63%;
+}
+.col-12, .w-100 {
+  width: 100%!important;
+  position: relative;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  width: calc(100% + 20px);
+  position: relative;
+  margin-right: -10px;
+  margin-left: -10px;
+}
+
+.content {
+  /* max-width: 1300px; */
+  margin: 0 auto;
+  padding: 20px;
+  flex-wrap: wrap;
+  display: flex;
+}
+
+footer {
+  position: relative;
+  background-color: #454545;
+  color: #ddd;
+  height: 58px;
+}
+
+div.banner {
+  width: 100%;
+  padding: 130px 0 100px;
+  background-size: cover;
+  background-blend-mode: luminosity;
+  background-image: url('../images/banner.png');
+  background-color: #1C811C55;
+  background-position-y: 20%;
+}
+
+div.banner .login {
+  margin: 0 auto;
+  max-width: 600px;
+  padding: 40px;
+  position: unset;
+  border-radius: 10px;
+  background-color: #fffffff0;
+}
+div.login {
+  display: flex;
+}
+div.login .coat-of-arm {
+  border-right: 1px solid #C6C6C6;
+  padding-top: 15px;
+  padding-right: 40px;
+  width: 270px;
+}
+div.login .coat-of-arm img {
+  width: 140px;
+  height: auto;
+}
+div.login .coat-of-arm h2 {
+  font-size: 1.58rem;
+  font-family: sans-serif;
+  line-height: 1.5rem;
+  font-weight: 700;
+}
+div.login .coat-of-arm h4 {
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+div.login .form {
+  padding-left: 40px;
+  width: 100%;
+  text-align: center;
+}
+.login-form-group {
+  width: 100%;
+  margin-bottom: 20px;
+}
+.login-form-group {
+  width: 100%;
+  margin-bottom: 15px;
+}
+.login-form-group input {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #C6C6C6;
+  border-radius: 5px;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: .9rem;
+  color: #777;
+}
+div.login .form button {
+  width: 100%;
+  color: #fff;
+  padding: 13px;
+  background-color: #017D34;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  transition: all 0.3s ease-out;
+}
+div.login .form button:hover {
+  background-color: #017D3488;
+}
+.intro {
+  max-width: 800px;
+  margin: 30px auto 10px;
+}
+div.dept-news {
+  background-color: #FFFFFF;
+  box-shadow: 5px 3px 22px #958E8E29;
+  border: 1px solid #C6C6C6;
+  border-radius: 10px;
+  padding: 20px;
+  position: relative;
+}
+div.dept-news h4 {
+  background-color: #1C811C;
+  color: #ffffff;
+  padding: 5px 10px 2px;
+  display: inline-block;
+  position: relative;
+  right: 20px;
+}
+.headline {
+  align-items: center;
+  border-bottom: 1px solid #C6C6C6;
+  padding-bottom: 20px;
+}
+.headline:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.headline .date {
+  background-color: #1C811C1F;
+  padding: 5px 10px;
+  text-align: center;
+}
+.headline .date .m {
+  font-size: 0.7rem;
+}
+.headline .date .d {
+  font-size: 1.4rem;
+}
+.headline .title {
+  margin-left: 10px;
+}
+div.bottom {
+  border-left: 1px solid #C6C6C6;
+  padding: 0 20px;
+}
+div.bottom h2 {
+  color: #1C811C;
+  font-family: sans-serif;
+  margin-bottom: 20px;
+}
+div.bottom ol {
+  padding-left: 20px;
+}
+div.bottom ul {
+  padding: 0;
+  list-style: none;
+}
+
+@media only screen and (max-width: 900px) {
+  .col-8,
+  .col-7,
+  .col-6 {
+    width: 100%;
+    flex: 1 0 100%;
+  }
+  .col-5,
+  .col-4,
+  .col-3 {
+    width: 50%;
+    flex: 1 0 50%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .col-5,
+  .col-4,
+  .col-3 {
+    width: 100%;
+    flex: 1 0 100%;
+  }
+  div.banner {
+    padding-top: 60px;
+  }
+  div.login {
+    display: block;
+    margin: 20px!important;
+  }
+  div.login .coat-of-arm {
+    border-right: none;
+    padding-bottom: 20px;
+    padding-right: 0;
+    text-align: center;
+    width: 100%;
+  }
+  div.login .form {
+    padding-left: 0;
+  }
+}

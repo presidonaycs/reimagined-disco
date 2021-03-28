@@ -9,8 +9,8 @@ export const FileUpload = async (data, callbackfunction) => {
     data,
     {
       headers: {
-         Authorization: `Bearer ${Access_token}`,
-         "content-type": "multipart/form-data",
+        // Authorization: `Bearer ${Access_token}`,
+        // "content-type": "multipart/form-data",
         'content-type': undefined,
       },
     },

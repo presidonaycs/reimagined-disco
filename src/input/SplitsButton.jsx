@@ -12,10 +12,7 @@ import MenuList from '@material-ui/core/MenuList';
 import { green } from '@material-ui/core/colors';
 import { withStyles } from '@material-ui/core';
 
-
-
-
-const options = ["Select", 'Accept', 'Reject'];
+const options = ['Accept', 'Cancel'];
 const Bbutton = withStyles({
     root:{
         textTransform:'none',
@@ -28,16 +25,11 @@ const Bbutton = withStyles({
 export default function SplitsButton(props) {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const [selectedIndex, setSelectedIndex] = React.useState(1);
 
-  const theSelect = (selectedIndex) => {
-    if(options[selectedIndex]=== "Accept")
-      return props.handleAccept
-    else if (options[selectedIndex]=== "Reject")
-      return props.handleCancel
-    else 
-      return handleToggle
-  }
+  // const handleClick = () => {
+  //   console.info(`You clicked ${options[selectedIndex]}`);
+  // };
 
   const handleMenuItemClick = (event, index) => {
     setSelectedIndex(index);
@@ -60,7 +52,7 @@ export default function SplitsButton(props) {
     <Grid container direction="column" alignItems="center">
       <Grid item xs={12}>
         <ButtonGroup variant="contained" color="primary" ref={anchorRef} aria-label="split button">
-          <Bbutton onClick={theSelect(selectedIndex)}>{options[selectedIndex]}</Bbutton>
+          <Bbutton onClick={options[selectedIndex]==='Accept' ? props.handleAccept : props.handleCancel}>{options[selectedIndex]}</Bbutton>
           <Button
             style={{height:'25px', width:'6px', borderRadius:'0px'}}
             backgroundColor='green'
@@ -89,6 +81,7 @@ export default function SplitsButton(props) {
                     {options.map((option, index) => (
                       <MenuItem
                         key={option}
+                        disabled={index === 2}
                         selected={index === selectedIndex}
                         onClick={(event) => handleMenuItemClick(event, index)}
                       >

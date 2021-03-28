@@ -1,20 +1,17 @@
-import { Box, Button, Card, Divider, FormControl, Grid, InputLabel, makeStyles, MenuItem, Paper, Select, SvgIcon, TextField, withStyles } from '@material-ui/core';
-import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
-import { ReactComponent as Logo } from "./../components/iconComponent/upload.svg";
-import http from '../httpCommon';
-import https from '../uploaderz';
-import ImageName from './ImageName'
+import React, { useEffect, useState } from 'react';
+import { Button, Box, Divider, FormControl, FormHelperText, Grid, InputLabel, Card, makeStyles, MenuItem, Select, TextField, withStyles, Paper, SvgIcon } from '@material-ui/core';
+import { ReactComponent as Logo } from "./../components/iconComponent/upload.svg"
+import { ReactComponent as Circle } from "./../components/iconComponent/circle-fill.svg"
+import SaveAltIcon from '@material-ui/icons/SaveAlt';
+import Request from './../components/MainMemo';
+import MemoSide from './MemoSide';
 import LocationDetails from './layouts/LocationDetails';
-import Cookies from "universal-cookie"
-import SuccessModal from '../assets/SuccessModal'
-import Uploadd from './Uploadd'
-import Upload from './Upload'
-import UploadButton from './UploadButton'
-import IsLoading from '../assets/IsLoading';
+import http from './../httpCommon'
+import { useHistory  } from 'react-router-dom'
+import Stepz from './Steps'
+import { defaultPrefixCls } from 'antd/lib/config-provider';
 
 
-var baseURL='http://devsvr.edogoverp.com/'
 
 const BootstrapButton = withStyles({
   root: {
@@ -109,7 +106,7 @@ const useStyles = makeStyles({
     padding: '6px',
 
     borderRadius: '3px',
-    fontFamily: 'avenir'
+    fontFamily: 'auto'
 
   },
 
@@ -142,7 +139,6 @@ var ministry = 'ministry of Education'
 var numb = 78943
 var grade = 'Grade level 8'
 var descriptions = 'sorry its ovaaaaaaaaaaaaaaaaaa'
-let today = new Date();
 
 let obj =  {
   id: 0,
@@ -170,196 +166,82 @@ const RequestForm = (props) => {
   const [subject, setSubject] = useState('')
   const [details, setDetails] = useState('')
   const [rows, setRows] = useState(obj)
-  const [images, setImages] = useState([{name:'names'}])
   var useStateRef=require('react-usestateref')
+
   const [error, setError] = useState('')
   const [selValue, setSelValue, selValueRef] = useStateRef(0)
-  const [selErr, setSelErr] = useState(false);
-  const [subErr, setSubErr] = useState(false)
-  const [detErr, setDetErr] = useState(false)
-  const [success, setSuccess] = useState(false);
-  const [flies, setFlies] = useState([]);
-  const [fahil, setFahil] = useState(null)
-  const [imagess, setImagess] = useState([]);
-  const [pat, setPath] = useState('');
-  const [loading, setLoading] = useState(false);
-
-  let imagg;
-  let namm;
-
-
-  var imgis = {
-    image:'', 
-    name:''
-  }
-  var path=''
-   var facImg = [];
-  
-  const recImagg = (e,n) =>{
-   
-    
-    
-  imgis.image = e;
-  imgis.name = n;
-  facImg.push(imgis);
-  
-  // setImagess(facImg)
-  //setImgState()
-  
-  }
-  
-  
-  
-  
-  console.log(facImg)
-  
-   
-
-
-
-
-
-  const validate = (Request, subject, details) =>{
-    if(selValueRef.current === null || selValueRef.current === "" || selValueRef.current === undefined || selValueRef.current === 0 || subject === null || subject === "" || subject === undefined || details === null || details === "" || details === undefined)
-      return true
-    else
-      return false
-  }
-
-
-
-const pingError = (Request, subject, details) =>{
-    if(selValueRef.current === null || selValueRef.current === "" || selValueRef.current === undefined|| selValueRef.current === 0)
-      setSelErr(true)
-    else setSelErr(false)
-    if(subject === null || subject === "" || subject === undefined)
-      setSubErr(true)
-    else setSubErr(false)
-    if(details === null || details === "" || details === undefined)
-      setDetErr(true)
-    else setDetErr(false)
-  }
-
-  const resetErrors=()=>{
-    setSelErr(false);
-    setDetErr(false);
-    setSubErr(false);
-  }
-
-
-
-    let cookies = new Cookies();
-    cookies.set("subjectValue", subject, {path:"/"})
-    cookies.set("detailsValue", details, {path:"/"})
-
-const closeModal = ()=>{
-  setSuccess(false);
-history.push('/facility-portal')
-}
-
 
 
   const handleSave = (e) => {
     e.preventDefault();
-    if(validate(Request, subject, details)){
-      pingError(Request, subject, details);
-    }
-    else{
-    setLoading(true);
     let url = ''
     console.log(url)
 
+    console.log('wait')
     http.post(url, {
       subject: subject,
       detail: details,
       storeAsDraft: true,
       approvalStatusId: 0,
       requestcategoryid: selValueRef.current,
-      images: facImg
+      images: []
 
     })
       .then((response) => {
         console.log('server')
         console.log(response.data)
         console.log("yess")
-        setSuccess(true)
-        setLoading(false);
+
       })
-      resetErrors();
-    }      
+
+      history.push("/facility-portal")
 
 
   }
 
-const handleSubChange=(e)=>{
-  setSubject(e.target.value)
-}
+  
 
-
-  console.log(subject + details + Request);
-
-  // const fetchDatas = async () => {
-  //   let url = "get-facility-request" // 'Director-ReviewedApprovals';
-  //   console.log(props.requestId)
-  //   console.log('hey')
-  //   console.log(url)
-  //    http.get(url, {
-  //      params:{
-  //        id:props.requestId
-  //      }
-  //    })
+  const fetchDatas = async () => {
+    let url = "get-facility-request" // 'Director-ReviewedApprovals';
+    console.log(props.requestId)
+    console.log('hey')
+    console.log(url)
+     http.get(url, {
+       params:{
+         id:props.requestId
+       }
+     })
     
-  //     .then((response) => {
-  //       console.log('server')
-  //       console.log(response.data)
-  //       setError(response.data.code)
-  //       setRows(props.rows)
+      .then((response) => {
+        console.log('server')
+        console.log(response.data)
+        setError(response.data.code)
+        setRows(props.rows)
         
         
-  //     })
+      })
 
-  // }
-  // useEffect(() => {
-  //   fetchDatas()
-
-  // }, [])
-
- let hello;
- console.log(hello);
-
-  
-function formattedDate(date){
-
-  var year = date.getFullYear();
-  var month = date.getMonth()+1;
-  var day = date.getDate();
-  
-  if (day < 10) {
-    day = '0' + day;
   }
-  if (month < 10) {
-    month = '0' + month;
+  useEffect(() => {
+    fetchDatas()
+
+  }, [])
+
+
+
+  const handleSelect = (e) =>{
+    setSelValue(e.target.value);
+    console.log(selValueRef.current)
+
+    console.log(e.target.value)
   }
-  
-   return day + '.' + month + '.' + year
-}
 
 
 
 
+  const handleSubmit = (e) => {
 
-
-
-
-  const handleSubmit =  () => {
-    if(validate(Request, subject, details)){
-      pingError(Request, subject, details);
-    }
-    else{
-    
-    
-      setLoading(true);
-    
+    e.preventDefault();
     let url = ''
     console.log(url)
 
@@ -370,38 +252,27 @@ function formattedDate(date){
       storeAsDraft: false,
       approvalStatusId: 0,
       requestcategoryid: selValueRef.current,
-      images: facImg
+      images: []
     })
       .then((response) => {
         console.log('server')
         console.log(response.data.data)
         console.log("yess")
-        setLoading(false);
-        setSuccess(true);
-        setTimeout(()=>{
-          history.push('/facility-portal')
-        }, 3000)
 
       })
-       
-    }
+       history.push("/facility-portal")
+
 
   }
 
-
-
-  const fyles=(files)=>{
-    setFlies(files)
+  const handleMemoChange = (event) => {
+    setRequest(event.target.value)
   }
 
-  
-  const fileHandler = (e) => {
-    setFahil(e.target.files[0])
-    console.log(fahil)
-}
+  const handleChangeSubject = (event) => {
+    setSubject(event.target.value)
+  }
 
- 
-  const dayte = formattedDate(new Date());
 
   const classes = useStyles();
   useEffect(() => {
@@ -409,68 +280,61 @@ function formattedDate(date){
     document.title = 'EDSG - Employee Details';
   }, []);
 
-
-
-  if(loading){
-    return <IsLoading />
-  }
-  else{
   return (
     < Grid Container>
       <div className='col'>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div className='row flex space-between' style={{ marginBottom: '16px' }}>
           <div>
             <div>Good Morning</div>
-            <div style={{ fontSize: '23px' }}>{cookies.get("firstName")} {cookies.get("lastName")}; #{cookies.get("staffNumber")}</div>
+            <div style={{ fontSize: '23px' }}>Osagie Osaigbovo; #{numb}</div>
 
-            <div>{cookies.get("role")} {cookies.get("mda")} | {grade}</div>
+            <div>{post} {ministry} | {grade}</div>
           </div>
-            <div>
-                <LocationDetails />
+          <div>
+            <LocationDetails />
           </div>
 
-      </div>
+        </div>
         <Grid container>
           <Grid item lg style={{ marginBottom: '1vw' }}>
-            <div style={{ fontWeight: 'bold', paddingBottom: '1vw',fontSize: '14px', marginTop:'8px' }}>Facility Request Management</div>
+            <div style={{ fontWeight: 'bold', fontFamily: 'auto', paddingBottom: '1vw' }}>Facility Request Management</div>
 
             <Box flexDirection='column' style={{ justifyContent: 'space-between' }}>
               <div style={{ width: '21.5vw' }}>
 
                 <div className={classes.root}>
-                  <Card style={{ marginBottom: '1vw', justifyContent: 'space-between' }}>
-                    <Box style={{ backgroundColor: 'white' }, { borderRadius: '3px' }, { margin: '15px' }}>
+                  <Card style={{ marginBottom: '1vw', height: '13vw', justifyContent: 'space-between' }}>
+                    <Box style={{ backgroundColor: 'white' }, { borderRadius: '3px' }, { margin: '20px' }}>
                       <Box style={{ margin: '10px 0px 10px 0px' }}>
-                        <FormControl error={selErr}>
+                        <FormControl className={classes.formControl} >
                           <InputLabel shrink id="demo-simple-select-placeholder-label-label" style={{ width: '20vw', fontSize: '1.3em', paddingBottom: '1vw' }}>
                             Select Request type:
-                          </InputLabel>
+                                </InputLabel>
                           <Select
-                            value={selValue ? selValue : ""}
                             labelId="demo-simple-select-placeholder-label-label"
                             displayEmpty
                             disableUnderline
                             style={{ width: '19vw' }}
                             required
-                            onChange = {e=>{setSelValue(e.target.value); setSelErr(false)}}
+                            onChange = {handleSelect}
+                            error
                             className={classes.selectEmpty}
-                            helperText="please choose a category"
                           >
                             <MenuItem value={1} >
-                              <span style={{ fontSize: '0.9rem' }}>Facility Maintenance</span>
+                              <span style={{ fontSize: '16px' }}>Facility Maintenance</span>
                             </MenuItem>
-                            <MenuItem value={2}> <span style={{ fontSize: '0.9rem' }}>Energy & Power Maintenance</span></MenuItem>
-                            <MenuItem value={3}> <span style={{ fontSize: '0.9rem' }}>Office Equipment</span></MenuItem>
-                            <MenuItem value={4}> <span style={{ fontSize: '0.9rem' }}>Office Space Request</span></MenuItem>
-                            <MenuItem value={5}> <span style={{ fontSize: '0.9rem' }}>Work Space Management</span></MenuItem>
+                            <MenuItem value={2}>Energy & Power Maintenance</MenuItem>
+                            <MenuItem value={3}>Office Equipment</MenuItem>
+                            <MenuItem value={4}>Office Space Request</MenuItem>
+                            <MenuItem value={5}>Work Space Management</MenuItem>
                           </Select>
                         </FormControl>
                       </Box>
-<SuccessModal show={success} closeModal={closeModal}/>
 
                       <Divider style={{ margin: '0px 0px 0px 0px' }} />
-                      <Box className={classes.myDivs}><span style={{ fontWeight: 'bolder', margin: '10px 0px 10px 0px', fontSize:'0.9rem' }}> Memo initiation date: {dayte} </span> </Box>
-                      <Box className={classes.myDivs}> <span style={{ fontWeight: 'bolder', fontSize: '0.9rem', margin: '10px 10px 10px 0px' }}>Memo initiator: {cookies.get("firstName")} {cookies.get("lastName")}</span> {initiator}</Box>
+                      <Box className={classes.myDivs} fontSize='16px'><span style={{ fontWeight: 'bolder', size: '18vw', margin: '10px 0px 10px 0px' }}> Memo initiation date: </span> {date}</Box>
+                      <Box className={classes.myDivs}> <span style={{ fontWeight: 'bolder', size: '18vw', fontSize: '16px', margin: '10px 0px 10px 0px' }}>Memo initiator:</span> {initiator}</Box>
+                      <Box className={classes.myDivs}> <span style={{ fontWeight: 'bolder', size: '18vw', fontSize: '16px', margin: '10px 10px 20px 0px' }}>View Memo:</span> {viewMemo}</Box>
                     </Box>
                   </Card>
                   {/* <Card style={{ marginBottom: '1vw' }}>
@@ -507,17 +371,14 @@ function formattedDate(date){
 
 
           <Grid item lg style={{ marginTop: '1vw' }} >
-            <Box flexDirection='column' style={{ maxWidth: '90%' }, { padding: '20px' }} fontSize='62.5%' >
+            <Box flexDirection='column' style={{ maxWidth: '100%' }, { padding: '20px', border: '1px  red', }} fontSize='62.5%' >
               <Box >
-                <Box flexDirection='column' maxWidth='100%' width='600px' minWidth='10%' style={{marginTop:'11px'}} >
-                  <Paper style={{ marginTop: '147px' }, { padding: '20px', maxWidth: '100%', minWidth: '10%' }}>
+                <Box flexDirection='column' maxWidth='100%' width='700px' minWidth='10%'>
+                  <Paper style={{ marginTop: '147px' }, { padding: '20px', border: '1px  red', maxWidth: '100%', minWidth: '10%' }}>
                     <Box>
-                      <FormControl  style={{width:"100%"}}>
                       <TextField id="outlined-details-static"
                         label="Subject:"
                         multiline
-                        required
-                        error={subErr}
                         InputProps={{ disableUnderline: true }}
                         rows={2}
                         InputLabelProps={{
@@ -525,23 +386,20 @@ function formattedDate(date){
                         }}
                         style={{ width: '100%' }, { backgroundColor: 'white' }, { margin: '0px' }}
                         fullWidth
-                        value={subject}
-                        onChange={(e)=>{setSubject(e.target.value); setSubErr(false); }}
+                        onChange={handleChangeSubject}
+                        
+                        onChange={e => setSubject(e.target.value)}
 
 
                       />
-                      </FormControl>
                     </Box>
                     <Divider style={{ marginBottom: '10px' }} />
 
                     <Box>
-                      <FormControl style={{width:"100%"} }>
                       <TextField
                         id="outlined-details-stati"
                         label="Details:"
                         multiline
-                        required
-                        error={detErr}
                         cols={300}
                         rows={14}
                         style={{ backgroundColor: 'white' }}
@@ -550,47 +408,21 @@ function formattedDate(date){
                         }}
                         InputProps={{ disableUnderline: true }}
                         fullWidth
-                        onChange={(e)=>{setDetails(e.target.value); setDetErr(false); }}
-                        value={details}
+                        
+                        onChange={e => setDetails(e.target.value)}
+                      
                       />
-                      </FormControl>
                     </Box>
                     <Divider />
 
                     <Box>
-                      {/* <BootstrapButton
-                        type='file'
+                      <BootstrapButton
                         variant='contained'
-                        component='label'
                         startIcon={<SvgIcon style={{ marginTop: '9px' }}>
                           <Logo />
                         </SvgIcon>}
                       >
-                        Upload Supporting Documents
-                        <input type='file' accept="/*" onChange={fileHandler} hidden></input>
-                      </BootstrapButton> */}
-                      <UploadButton style={{width:'200px'}} sendImagg={recImagg}/>
-                    
-                       
-                     
-                     
-                      {/* <Uploadd/>
-                      <Upload filing={fyles}/> */}
-                        
-                        {/* <div>
-                      {
-                        flies.map((it)=>(
-                          it.name
-                          
-                          
-                        ))
-                      }
-                      </div> */}
-                      {/* if(images === ''){
-
-                      }
-                      else
-                       <ImageName arr={images}/> */}
+                        Upload Supporting Documents</BootstrapButton>
                     </Box>
                   </Paper>
                 </Box>
@@ -612,8 +444,8 @@ function formattedDate(date){
         </Grid>
       </div>
 
+
     </ Grid>
   );
-                      }
 };
 export default RequestForm

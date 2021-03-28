@@ -2,90 +2,98 @@ import React, { lazy, Suspense } from 'react';
 import { Route, Switch } from 'react-router';
 import { pure } from 'recompose';
 import ProtectedRoute from './ProtectedRoute';
-import Dashboard1 from '../components/Dashboard1'
-import Report from './../components/pages/Report'
-import Cookies from "universal-cookie"
+//import Dashboard1 from '../components/Dashboard1'
+import Dash from './../Dash'
+import Page5 from '../components/Page5'
+import Page6 from '../components/Page6'
+import Page7 from '../components/Page7'
+import Page8 from '../components/Page8'
+import Page9 from '../components/Page9'
+import Page19 from '../components/Page19'
+import Page10 from '../components/Page10'
+import Page11 from '../components/Page11'
+import Page12 from '../components/Page12'
+import Page41 from '../components/Page41';
 
 
-const cookie = new Cookies();
+
+
 // const Dashboard1 = lazy(() => import('../components/Dashboard1'))
-const RequestForm = lazy(() => import('../components/RequestForm'))
-const RequestReport = lazy(() => import('./../components/pages/RequestReport'))
-const ViewMemoForm = lazy(() => import('../components/pages/ViewMemoForm'))
-const RequestManagement8 = lazy(() => import('./../pages/RequestManagement8'))
-const  ReviewRequest = lazy(() => import('./../components/MaintenanceRequestManagement'))
-const Page6Final = lazy(() => import('./../components/Page6Final'))
-const  IsLoading = lazy(() => import('../assets/IsLoading'))
-const  FacMaintenance7 = lazy(() => import('./../components/pages/FacMaintenance7'))
-const  logout = lazy(() => import('./Logout'))
-const Home = lazy(() => import('./../components/home/index'))
-const Tech24 = lazy(() => import('./../components/pages/TechnicalReviewModal24'))
+// const RequestForm = lazy(() => import('../components/RequestForm'))
+// const RequestReport = lazy(() => import('./../components/pages/RequestReport'))
+// const ViewMemoForm = lazy(() => import('../components/pages/ViewMemoForm'))
+// const RequestManagement8 = lazy(() => import('./../pages/RequestManagement8'))
+// const  ReviewRequest = lazy(() => import('./../components/MaintenanceRequestManagement'))
+// const Page6Final = lazy(() => import('./../components/Page6Final'))
+// const  IsLoading = lazy(() => import('../assets/IsLoading'))
+// const  FacMaintenance7 = lazy(() => import('./../components/pages/FacMaintenance7'))
 
 
+const approvalSequence =3;
 
-var approvalSequence =parseInt(cookie.get("userSequence"));
-console.log(cookie.get("firstName"))
-console.log(cookie.get("userSequence"))
 
 
 
 
 export default pure(() => (
   <Switch>
-    <ProtectedRoute
-      path="/facility-portal/"
-      exact
-      component={Dashboard1}
-    />
-    <Suspense fallback={<IsLoading/>}>
-      
-    <ProtectedRoute
-      path="/facility-portal/request-maintainance"
+     <ProtectedRoute
+      path='/adminstore-portal/inventory-manager/requisition'
       exact
     //  component={RequestMaintenance}
-    component={RequestForm}
+    component={Page5}
+    />
+
+    <ProtectedRoute
+      path='/adminstore-portal/inventory-manager/review-request'
+      exact
+      component={Page6}
+    />      
+    <ProtectedRoute
+      path='/adminstore-portal/inventory-manager/inventory'
+      exact
+    //  component={RequestMaintenance}
+    component={Page7}
     />
     <ProtectedRoute
       path="/facility-portal/review-request"
       exact
-      component={approvalSequence>5?RequestManagement8:ReviewRequest}
+      component={Page6}
     />
     <ProtectedRoute
-      path="/facility-portal/manage-request"
+      path="/adminstore-portal/warehouse-manager/requisition"
       exact
-      component={FacMaintenance7}
+      component={Page9}
 
     />
     <ProtectedRoute
-       path="/facility-portal/request-report"
+       path="/adminstore-portal/warehouse-manager/review-request"
        exact
-       component={Report}
+       component={Page10}
     />
     <ProtectedRoute
-      path="/facility-portal/facility-settings"
+      path="/adminstore-portal/request-report"
       exact
-      component={Page6Final}
+      component={Page12}
     />
     <ProtectedRoute
-      path="/facility-portal/facility-pop-menu"
+      path="/adminstore-portal/facility-settings"
       exact
-      component={RequestManagement8}
+      component={Page8}
     />
 
     <ProtectedRoute
       path="/facility-portal/view-memo-form"
       exact
-      component={ViewMemoForm}
+      component={Dash}
     />
-
     <ProtectedRoute
-      path='/'
+      path="/facility-portal/Page41"
       exact
-      component={Home}
+      component={Page41}
     />
     
-    </Suspense>
-  <Route render={() => <h1>Error 404. Page not found.</h1>} />
+      <Route render={() => <h1>Error 404. Page not founding.</h1>} />
     
   </Switch>
 ));

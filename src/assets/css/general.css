@@ -432,13 +432,3 @@ button:focus {
 .profile-brief .brief p {
   font-size: 0.8rem;
 }
-
-thead[class*="ant-Table-Thead"] th{
-  background-color: yellow !important;
-}
-
-
-
-
-
-

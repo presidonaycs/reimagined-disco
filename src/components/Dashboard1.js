@@ -1,18 +1,19 @@
-import { Divider, Grid, Paper } from '@material-ui/core';
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import Cookies from "universal-cookie";
-import { VictoryAxis, VictoryChart, VictoryLabel, VictoryLine, VictoryTheme } from 'victory';
-import { default as http, default as httpCommon } from '../httpCommon';
-import IsLoading from "./../assets/IsLoading";
-import SuccessModal from './../assets/SuccessModal'
-import EditRequest from './EditRequest';
+import { Divider, Grid, Paper } from '@material-ui/core'
+import React, { useEffect, useState } from 'react'
+import httpCommon from '../httpCommon';
+import SplitsButton from '../input/SplitsButton';
+import http from '../httpCommon';
 import LocationDetails from './layouts/LocationDetails';
-import DashboardViewMemo from './pages/DashboardViewMemo';
 import SavedRequest from './SavedRequest';
 import SubmittedRequest from './SubmittedRequest';
-
-
+import { VictoryLine, VictoryChart, VictoryTheme, VictoryLabel,VictoryAxis} from 'victory';
+import RequestForm from './RequestForm';
+import ViewMemoForm from './pages/ViewMemoForm';
+import axios from 'axios';
+import DashboardView from './pages/DashboardViewMemo'
+import DashboardViewMemo from './pages/DashboardViewMemo';
+import EditRequestForm from './EditRequestForm.txt'
+import EditRequest from './EditRequest';
 
 
 
@@ -25,8 +26,8 @@ export default function Dashboard1() {
   const [issuedRequests, setIssuedRequests] = useState([])
   const [approvedRequests, setApprovedRequests] = useState([])
 //  const [showModal, setShowModal] = useState(false)
-    let [showModal, setShowModal, reff] = useStateRef(false)
-    let [loading, setLoading] = useState(true);
+  
+  let [showModal, setShowModal, reff] = useStateRef(false)
 
 
 
@@ -53,7 +54,6 @@ export default function Dashboard1() {
   const [temp, setTemp] = useState({})
   let [docs, setDocs, docref] = useStateRef([])
   var [rows, setRows, ref1] = useStateRef([]);
-  var [success, setSuccess] = useState(false)
 
 let [responseData, setResponseData] = useState({data: {
   requestId:  0,
@@ -65,7 +65,6 @@ let [responseData, setResponseData] = useState({data: {
   subject: "",
   details: "",
   lastMaintainanceDate: "",
-  approvalSequence:[],
   approvalJourneyResponse: [
    
   ],
@@ -76,42 +75,8 @@ let [responseData, setResponseData] = useState({data: {
 })
 
 
-
-const handleSubmits= (e) =>{
-  let url = 'View-Memo-Details' 
-setLoading(true);
-  http.get(url, {
-    params: {
-     
-      requestId:e
-    }
-  })
-    .then((response) => {
-      console.log(url)
-      console.log(response.data)
-    //  setError(response.data.code)
-     // setRows(response.data.data)
-     if (response.data.data === null) {
-     
-      console.log('logtest')
-      console.log('logan')
-
-      console.log(responseData)
-     }
-     else 
-     {
-       setResponseData(response.data.data)
-     
-
-     }
-
-     setShowModal(true);
-     setLoading(false);
-      
-    //  { ref.current< 1 ? setDocs([]): //setDocs(response.data.data.uploadedDocuments)}
-
-    }
-    )
+const handleSubmits= () =>{
+  setShowModal(true);
   console.log(reff.current)
 }
 
@@ -119,80 +84,40 @@ const handleClose = () =>{
   setShowModal(false)
 }
 
-let cookie = new Cookies();
-  useEffect(() => {
-    setLoading(true)
+
+
   const fetchDashboardData = async () => {
     let url = 'dashboard-request';
 
-    await http.get(url)
+    httpCommon.get(url)
       .then((response) => {
-        if(response.data.data === null || response.data.data === undefined){ 
-          setLoading(false)
-        }
-        else{
-          console.log('server')
-          console.log(response.data.data)
-          setDashBoard(response.data.data)
-          setInitiatedRequests(response.data.data.initiatedRequests)
-          setCompletedRequests(response.data.data.completedRequests)
-          setRequests(response.data.data.requests)
-          setIssuedRequests(response.data.data.issuedRequests)
-          setApprovedRequests(response.data.data.approvedRequests)
-          setLoading(false)
-        }
+        console.log('server')
+        console.log(response.data.data)
+        setDashBoard(response.data.data)
+        setInitiatedRequests(response.data.data.initiatedRequests)
+        setCompletedRequests(response.data.data.completedRequests)
+        setRequests(response.data.data.requests)
+        setIssuedRequests(response.data.data.issuedRequests)
+        setApprovedRequests(response.data.data.approvedRequests)
+
 
       })
+
   }
-  
+  useEffect(() => {
     fetchDashboardData()
     console.log(dashBoard)
 
   }, [])
 
- 
-  const handleSubmit = async (e) =>{
-    setLoading(true)
-    let params = new URLSearchParams();
-    params.append('FacilityRequestVM', null);
-    params.append('requestId', e );
-    let key = parseInt(e)
-    let temp ;
-    await http.get("get-dashboard-update", {
-      params:{
-       
-        requestId: e
-
-      }
-    })
-    .then((response) => {
-      setLoading(false);
-      setSuccess(true)   
- })
-   
-    
-    
-  }
-
-
-const closeSuccess=()=>{
-  setSuccess(false);
-  setTimeout(()=>{
-    window.location.reload();
-  }, 5000)
-}
-
-
-
-
-
 
  const handleClick = (e) =>{
-   
     setClickedRequestId(e);
+    console.log(ref.current)
    
  
     
+   console.log(reff.current)
   
  
     let url = 'View-Memo-Details' 
@@ -218,8 +143,6 @@ const closeSuccess=()=>{
        else 
        {
          setResponseData(response.data.data)
-
-
        }
 
       
@@ -238,16 +161,15 @@ const closeSuccess=()=>{
 
 
 console.log(ref.current)
-  const handleEdit= (e)=>{
-    
+  const handleEdit= (e, ids)=>{
+
     let config = {
      
       params: {
         requestId: e
       },
     }
-    
-    setLoading(true)
+    setShowEdit(true);
     console.log(e)
     console.log("checked again")
     let url = 'View-Memo-Details' 
@@ -275,8 +197,7 @@ console.log(ref.current)
          setResponseData(response.data.data)
        }
 
-       setLoading(false)
-setShowEdit(true);
+  
       })
  
   }
@@ -294,41 +215,42 @@ setShowEdit(true);
       .then((response)=>{
         console.log(ref.current)
         console.log(response)
-        window.location.reload();
       })
       
-   
+    window.location.reload();
   }
 
  
-  // const handleSubmit= async ()=>{
-  //   const data = await http.get('get-facility-request', {
-  //                   params:{
-  //                   id:ref.current
-  //                 }
+  const handleSubmit= async ()=>{
+    const data = await http.get('get-facility-request', {
+                    params:{
+                    id:ref.current
+                  }
                  
-  //               })
-  //               .then((response)=>{
-  //                 response.data.data.saveAsDraft = false;
-  //                 console.log(response)
-  //               })
-  //               .then((res)=>{
-  //                 axios.post('', {res})
-  //                 console.log(res)
+                })
+                .then((response)=>{
+                  response.data.data.saveAsDraft = false;
+                  console.log(response)
+                })
+                .then((res)=>{
+                  axios.post('', {res})
+                  console.log(res)
 
-  //               })
+                })
                 
                 
            
 
-  // }
+  }
   
  
  
 
 if(showEdit){
   
-  
+  console.log(ref.current)
+  console.log(ref1.current)
+    console.log('yoopyoop')
   return(
   <div>
     
@@ -338,39 +260,36 @@ if(showEdit){
   )
   
 }
-
-if(loading){
-  return(
-    <IsLoading show={loading}/>
-  )
-}
-else{
   return (
     <div style={{ width: '100%' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div>
           <div>Good Morning</div>
-          <div style={{ fontSize: '23px' }}>{cookie.get("firstName")} {cookie.get("lastName")}; #{cookie.get("staffNumber")}</div>
+          <div style={{ fontSize: '23px' }}>Osagie Osaigbovo; #{numb}</div>
 
-          <div>{cookie.get("role")} {cookie.get("mda")} | {grade}</div>
+          <div>{post} {ministry} | {grade}</div>
         </div>
         <div>
           <LocationDetails />
         </div>
         {console.log('passed')}
-        
+        <DashboardViewMemo data={responseData} show={reff.current}  handleClose={handleClose}/>
+       
+    
       </div>
       <div style={{ marginTop: '20px' }}>
-        <Grid container sm={12} style={{ marginBottom: '24px' }} style={{display:'flex', justifyContent:'space-between'}}>
+        <Grid container sm={12} style={{ marginBottom: '24px' }}>
           <Grid item sm={3}>
-            <span style={{ fontWeight: '700', fontFamily: 'avenir', marginBottom: '30px' }}>Issued maintenance requests</span>
+            <span style={{ fontWeight: '900', fontFamily: 'auto', marginBottom: '30px' }}>Issued maintenance requests</span>
+            <div style={{ fontWeight: '900', fontFamily: 'auto', marginTop: '3px' }}></div>
 
-            <Paper style={{ backgroundColor: 'white', height: '300px', width: '25vw' }}>
+            <Paper style={{ backgroundColor: 'white', height: '300px', width: '350px' }}>
               <VictoryChart
                 theme={VictoryTheme.material}
                 domainPadding={4}
               >
                 <VictoryLine
+                  width={'100%'}
                   interpolation="natural"
                   labelComponent={
                     <VictoryLabel angle={-45} textAnchor="end"/>
@@ -380,22 +299,28 @@ else{
                     parent: { border: "1px solid #ccc" }
 
                   }}
-                  data={dashBoard.issuedRequests}
+                  data={[
+                    { x: 1, y: 2 },
+                    { x: 2, y: 3 },
+                    { x: 3, y: 5 },
+                    { x: 4, y: 4 },
+                    { x: 5, y: 7 },
+                  ]}
                 />
                 <VictoryAxis dependentAxis
-                tickValues={[2,4,6,8,10,12,14,16,18,20]}
+                tickValues={[2,4,6,8,10,12,14,16,19,20]}
                 />
                 <VictoryAxis 
-                tickValues={[2018, 2019, 2020, 2021, 2022, 2023]}
+                tickValues={[1,2,3,4,5,6,7,8,9,10]}
                 style={{tickLabels:{angle:30}}}
                 />
               </VictoryChart>
             </Paper>
           </Grid>
-          <Grid item sm={3} style={{ marginLeft: '60px' }}>
-            <span style={{ fontWeight: '900', fontFamily: 'avenir' }}>Approved Requests</span>
-            <div style={{ fontWeight: '900', fontFamily: 'avenir', marginTop: '3px' }}></div>
-            <Paper style={{ backgroundColor: 'white', height: '300px',width:'25vw' ,padding: '0px' }}>
+          <Grid item sm={3} style={{ marginLeft: '90px' }}>
+            <span style={{ fontWeight: '900', fontFamily: 'auto' }}>Approved Requests</span>
+            <div style={{ fontWeight: '900', fontFamily: 'auto', marginTop: '3px' }}></div>
+            <Paper style={{ backgroundColor: 'white', height: '300px', width: '350px', padding: '0px' }}>
               <VictoryChart
                 theme={VictoryTheme.material}
               >
@@ -408,23 +333,22 @@ else{
 
                   }}
                   data={
-                    dashBoard.approvedRequests
+                    [
+                      { x: 1, y: 2 },
+                      { x: 2, y: 3 },
+                      { x: 3, y: 5 },
+                      { x: 4, y: 4 },
+                      { x: 5, y: 7 }
+                    ]
                   }
-                />
-                <VictoryAxis dependentAxis
-                tickValues={[2,4,6,8,10,12,14,16,18,20]}
-                />
-                <VictoryAxis 
-                tickValues={[2018, 2019, 2020, 2021, 2022, 2023]}
-                style={{tickLabels:{angle:30}}}
                 />
               </VictoryChart>
             </Paper>
           </Grid>
-          <Grid item container sm={3} style={{ marginLeft: '40px', marginRight: '10px' }}>
-            <Grid item sm={12} style={{ marginTop: '8px', padding: '12px', width:'100%'}}>
-              <Paper style={{ backgroundColor: 'white', height: '140px'}}>
-                <div style={{ fontWeight: 'bolder', padding: '10px', fontFamily: 'avenir', marginTop: '3px' }}>
+          <Grid item container sm={3} style={{ marginLeft: '120px' }}>
+            <Grid item sm={12} style={{ marginTop: '8px', padding: '12px' }}>
+              <Paper style={{ backgroundColor: 'white', height: '140px', width: '300px' }}>
+                <div style={{ fontWeight: 'bolder', padding: '10px', fontFamily: 'auto', marginTop: '3px' }}>
                   Initiated Request
                             </div>
                 <Divider />
@@ -434,13 +358,12 @@ else{
 
               </Paper>
             </Grid>
-            <DashboardViewMemo data={responseData} show={reff.current}  handleClose={handleClose} docs={responseData.uploadedDocuments??[]} journey={responseData.approvalJourneyResponse??[]} sequence={responseData.approvalSequence??[]}/>
             <br></br>
             <br></br>
             <br></br>
             <Grid item sm={12} style={{ marginTop: '-6px', padding: '12px' }}>
-              <Paper style={{ backgroundColor: 'white', height: '138px'}}>
-                <div style={{ fontWeight: 'bolder', padding: '10px', fontFamily: 'avenir', marginTop: '3px' }}>
+              <Paper style={{ backgroundColor: 'white', height: '138px', width: '300px' }}>
+                <div style={{ fontWeight: 'bolder', padding: '10px', fontFamily: 'auto', marginTop: '3px' }}>
                   Completed Request
                 </div>
                 <Divider />
@@ -462,19 +385,17 @@ else{
               </div>
         </div>
 
-        {requests?.map((item) => (
+        {requests.map((item) => (
           (item.currentApproverStage > 0) ? 
-          <div key={item.requestId}  onClick={()=>handleClick(item.requestId)} style={{marginTop:'16px'}}>
-            <SubmittedRequest status={item.approvalstatusId} officerName={item.currentApprover}  date={item.lastModified} title={item.subject} handlePop={()=>handleSubmits(item.requestId)}/></div>
+          <div  onClick={()=>handleClick(item.requestId)} style={{marginTop:'16px'}}>
+            <SubmittedRequest status={item.approvalStatusId} officerName={item.currentApprover}  date={item.lastModified} title={item.subject} handlePop={handleSubmits}/></div>
           :
-           <div key={item.requestId} onClick={()=>handleClick(item.requestId)} style={{marginTop:'16px'}}>
-             <SavedRequest key={item.requestId} title={item.subject} handleEdit={handleEdit.bind(this,item.requestId)} handleDelete= {handleDelete.bind(this,item.requestId)} handleSubmit={handleSubmit.bind(this,item.requestId)}/></div>
+           <div  onClick={()=>handleClick(item.requestId)} style={{marginTop:'16px'}}>
+             <SavedRequest key={item.requestId} title={item.subject} handleEdit={handleEdit.bind(this,item.requestId)} handleDelete= {handleDelete.bind(this,item.requestId)}/></div>
         ))}
 
 
       </div>
-      <SuccessModal show={success} closeModal={closeSuccess}/>
     </div>
   )
-  }
 }

@@ -5,9 +5,9 @@ import { TiArrowSortedDown } from 'react-icons/ti';
 import UserAvater from '../../assets/images/user-avater.png';
 import { formatFileUrl } from '../../utility/general';
 import HeaderSearch from '../inputs/HeaderSearch';
-import Cookies from 'universal-cookie'
 
-const cookies = new Cookies();
+
+
 const Header = ({ history, details = {}, navList = [] }) => {
   const [userPix, setUserPix] = useState('');
   const [imgHasError, setImgHasError] = useState(false);
@@ -21,14 +21,11 @@ const Header = ({ history, details = {}, navList = [] }) => {
     setImgHasError(true);
   };
 
-console.log(cookies.firstName)
-
-
   return (
     <header>
       <div className="content header-content space-between flex-v-center">
         <div className="header-left">
-          Facility       
+          <HeaderSearch placeholder="Search transactions or invoices" />
         </div>
         <div className="header-right flex flex-v-center">
           <div className="right-item notification flex p-r">
@@ -47,13 +44,13 @@ console.log(cookies.firstName)
               className="user-avater-details flex flex-v-center pointer"
             >
               <div className="m-r-5 right-text" style={{ paddingTop: '3px' }}>
-                <p className="name">{cookies.get("firstName").concat(" ").concat(cookies.get("lastName")) }</p>
-                <p className="role">{cookies.get('userRole') || 'Officer 1'}</p>
+                <p className="name">{details.userName || 'Osagie Osaigbovo'}</p>
+                <p className="role">{details.userRole || 'Officer 1'}</p>
               </div>
               <div className="flex">
                 <img onError={handleImgError} src={userPix || UserAvater} alt="user avater" />
               </div>
-              <div className="flex arrow"> 
+              <div className="flex arrow">
                 <TiArrowSortedDown />
               </div>
             </div>

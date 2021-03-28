@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { RiAddLine } from 'react-icons/ri';
 import { BiEditAlt } from 'react-icons/bi';
 import { GiTrashCan } from 'react-icons/gi';
-import { RiAddLine } from 'react-icons/ri';
+
 import SearchInput from '../inputs/SearchInput';
 import LocationDetails from '../layouts/LocationDetails';
 import RoleForm from '../layouts/RoleForm';
-
 
 const RolesSetup = ({ history }) => {
   const [showFormModal, setShowFormModal] = useState(false);

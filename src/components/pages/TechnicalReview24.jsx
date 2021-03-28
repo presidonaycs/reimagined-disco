@@ -1,17 +1,16 @@
-import { Button, Container, Divider, Grid, makeStyles, Paper, SvgIcon, TextField, withStyles } from '@material-ui/core';
+import React, { useState } from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
+import imaee from './../../images/WIN_20190309_20_47_24_Pro.jpg'
+import imaef from './../../images/WIN_20190309_20_48_16_Pro.jpg'
+import imaeg from './../../images/WIN_20190309_20_48_22_Pro.jpg'
 import TableRow from '@material-ui/core/TableRow';
 import CancelPresentationIcon from '@material-ui/icons/CancelPresentation';
-import React, { useState } from 'react';
-import httpCommon from '../../httpCommon';
-import imaee from './../../images/WIN_20190309_20_47_24_Pro.png';
-import imaef from './../../images/WIN_20190309_20_48_16_Pro.png';
-import imaeg from './../../images/WIN_20190309_20_48_22_Pro.png';
-import { ReactComponent as Logo } from "./../iconComponent/upload.svg";
+import { ReactComponent as Logo } from "./../iconComponent/upload.svg"
+import { Button, Box, Divider, FormControl, FormHelperText, Grid, InputLabel, makeStyles, MenuItem, Select, TextField, withStyles, Paper, SvgIcon, Container } from '@material-ui/core';
 
 const BooButton = withStyles({
   root: {
@@ -136,7 +135,6 @@ const [upload, setUpload] = useState(null);
 const [images, setImages] = useState(List)
 const [showFormModal, setShowFormModal] = useState(true);
 const [selectedRecord, setSelectedRecord] = useState([]);
-const [additionalComment, setAdditionalComment] = useState("");
 
 
 var handleOnUpload = event =>{
@@ -144,23 +142,7 @@ var handleOnUpload = event =>{
   List.push({fileName:upload.name, filePath:upload.size})
 } 
 
-const handleSubmit = () =>{
-  let url="ApproveRequest"
-  httpCommon.post(url, {
-    requestid:props.id.current,
-    addtionalcomment:additionalComment,
-    facilityBillofquantities:props.tech.billofquantities,
 
-  })
-  .then((response)=>{
-    console.log(response)
-    console.log(props.id.current)
-    console.log(additionalComment)
-    console.log(props.tech.billofquantities)
-  })
-}
-
-console.log(additionalComment)
 console.log(upload)
 
 if(props.show){
@@ -177,7 +159,6 @@ if(props.show){
       
       <div>
         <TextField
-        onChange = {e=>{setAdditionalComment(e.target.value)}}
         style={{backgroundColor:'white'}}
         className={classes.root}
         multiline
@@ -223,70 +204,70 @@ if(props.show){
       <div className={classes.root} style={{backgroundColor:'lightgrey'}}>
         Pagination
       </div>
-            <Container style={{ backgroundColor: 'white' }}>
-              {List.map((item) => (
-                <div style={{ margin: '16px 0px 16px 0px' }}>
-                  <div>{item.fileName}</div>
-                  <div><img src={item.filePath} alt="John" style={{ width: '100%' }}></img></div>
-                </div>
-              ))}
-            </Container>
-            <div style={{ backgroundColor: 'lightgreen', padding: '12px', fontWeight: 'bold', fontFamily: 'auto' }}>
-              Add notes
+      <Container style={{backgroundColor:'white'}}>
+                {List.map((item) => (
+                  <div style={{ margin: '16px 0px 16px 0px' }}>
+                    <div>{item.fileName}</div>
+                    <div><img src={item.filePath} alt="John" style={{ width: '100%' }}></img></div>
+                  </div>
+                ))}
+              </Container>
+              <div style={{ backgroundColor: 'lightgreen', padding: '12px', fontWeight: 'bold', fontFamily: 'auto' }}>
+          Add notes
         </div>
-            <Paper>
-              <TextField
-                id="outlined-details-stati"
-                multiline
-                cols={30}
-                rows={10}
-                style={{ width: '100%', fontSize: '5px' }, { backgroundColor: 'white', padding: '12px' }}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                InputProps={{ disableUnderline: true }}
-                fullWidth
+        <Paper>
+        <TextField
+          id="outlined-details-stati"
+          multiline
+          cols={30}
+          rows={10}
+          style={{ width: '100%', fontSize: '5px' }, { backgroundColor: 'white', padding: '12px' }}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          InputProps={{ disableUnderline: true }}
+          fullWidth
 
-              />
-              <Divider variant='middle' />
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <div>
-                  <BootstrapButton
-                    type='file'
-                    variant='contained'
-                    component='label'
-                    startIcon={<SvgIcon style={{ marginTop: '9px' }}>
-                      <Logo />
-                    </SvgIcon>}
-                  >
-                    Upload Supporting Documents
+        />
+        <Divider variant='middle' />
+        <div style={{display:'flex',justifyContent:'space-between'}}>
+          <div>
+          <BootstrapButton
+            type='file'
+            variant='contained'
+            component='label'
+            startIcon={<SvgIcon style={{ marginTop: '9px' }}>
+              <Logo />
+            </SvgIcon>}
+          >
+            Upload Supporting Documents
               <input type='file' accept="image/*" hidden onChange={handleOnUpload}></input>
-                  </BootstrapButton>
-                </div>
-                <div>
-                  <BooButton onClick={handleSubmit}>Submit</BooButton>
-                  <BooButton style={{ backgroundColor: 'grey' }}>Clear Entry</BooButton>
-                  <BooButton style={{ backgroundColor: 'silver', color: 'black' }} onClick={props.handleClose}>Close</BooButton>
-                </div>
-              </div>
-            </Paper>
-          </Grid>
+          </BootstrapButton>
+          </div>
+          <div>
+          <BooButton onClick={props.handleClose}>Submit</BooButton>
+          <BooButton style={{backgroundColor:'grey'}}>Clear Entry</BooButton>
+          <BooButton style={{backgroundColor:'silver', color:'black'}} onClick={props.handleClose}>Close</BooButton>
+          </div>
         </div>
+        </Paper>
+      </Grid>
+    </div>
 
-      </div>
-
-
-
-
-
+  </div>
 
 
 
-    );
-  }
-  else {
-    return '';
-  }
-}
 
-export default TechnicalReview24;
+
+
+    
+  
+      );
+    }
+    else{
+      return '';
+    }
+      }
+
+      export default TechnicalReview24;

@@ -17,7 +17,6 @@ const AreYouSure = ({
   //   handleDeleteBtn(currentPeriod.id);
   // }, [confirmDelete, currentPeriod, handleDeleteBtn]);
   // console.log('logging item to be deleted', currentItem, itemName, currentItem[itemName]);
-  if(props.show){
   return (
     <div className='overlay' style={{ alignContent: 'center', justifyContent: 'center' }}>
       <div
@@ -68,9 +67,8 @@ const AreYouSure = ({
                 className={`${!props?.submit ? 'bg-danger' : 'bg-submit'} btn btn-large w-45`}
                 type='button'
                 onClick={() => {
-                 props.handleDelete();
                   // setConfirmDelete(true);
-                  // deleteFunc(endpoint, currentItem);
+                  deleteFunc(endpoint, currentItem);
                 }}>
                 {!props?.btnText ? 'Yes, Delete' : props?.btnText}
               </button>
@@ -78,7 +76,7 @@ const AreYouSure = ({
                 className='bg-light-gray btn btn-large w-45'
                 type='button'
                 onClick={() => {
-                  // setConfirmDelete(false);
+                  setConfirmDelete(false);
                   closeModal();
                 }}>
                 No, Cancel
@@ -88,8 +86,7 @@ const AreYouSure = ({
         </div>
       </div>
     </div>
-  );}
-  else return "";
+  );
 };
 
 export default AreYouSure;

@@ -1,19 +1,10 @@
 import * as React from 'react';
-import Cookies from 'universal-cookie';
+import Cookies from 'js-cookie';
 import { IoMdClose } from 'react-icons/io';
-import ThumbUpIcon from '@material-ui/icons/ThumbUp'
+import clapIcon from '../../assets/images/clapIcon.png';
 
-const cookies = new Cookies();
-const SuccessModal = ({ closeModal, action = 'Success', show }) => {
-
-const closeMode =()=>{
-  closeModal();
-  window.location.reload();
-}
-
-  if(show){
+const SuccessModal = ({ closeModal, action = 'Your update was successfully' }) => {
   return (
-    
     <div className='overlay' style={{ alignContent: 'center', justifyContent: 'center' }}>
       <div
         className='modal-box max-w-400'
@@ -30,28 +21,25 @@ const closeMode =()=>{
               backgroundColor: 'rgba(209, 26, 42, .9)',
               padding: '3px',
             }}
-            onClick={closeMode}
+            onClick={closeModal}
           />
           <div className='flex flex-direction-column flex-v-center mx-auto'>
             <div>
-              <ThumbUpIcon style={{width:'65px'}} />
+              <img src={clapIcon} width='65px' alt='Clap' />
             </div>
-            {/* <h2 className='m-t-5'>Hello {cookies.get('firstName')}!</h2> */}
+            <h2 className='m-t-5'>Hello {Cookies.get('fullname')}!</h2>
             <h3 className='m-t-10'>{action}</h3>
           </div>
           <button
             type='button'
             className='btn btn-large w-100 m-t-10 btn-round'
-            onClick={() => closeMode()}>
+            onClick={() => closeModal()}>
             Continue
           </button>
         </div>
       </div>
     </div>
-  );}
-  else
-  return ""
-
+  );
 };
 
 export default SuccessModal;

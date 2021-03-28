@@ -1,6 +1,10 @@
-import { Button, Divider, Grid, makeStyles, Paper, SvgIcon, TextField, withStyles } from '@material-ui/core';
+import { Button, Box, Divider, FormControl, FormHelperText, Grid, InputLabel, makeStyles, MenuItem, Select, TextField, withStyles, Paper, SvgIcon } from '@material-ui/core';
 import React from 'react';
-import { ReactComponent as Logo } from "./../iconComponent/upload.svg";
+import SaveAltIcon from '@material-ui/icons/SaveAlt';
+import { ReactComponent as Logo } from "./../iconComponent/upload.svg"
+import LensIcon from '@material-ui/icons/Lens';
+import Brightness1Icon from '@material-ui/icons/Brightness1';
+import { TextareaAutosize } from '@material-ui/core';
 
 
 

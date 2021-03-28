@@ -1,19 +1,9 @@
-import { Box, Button, Divider, Paper, Table, TableCell, TableHead, TextField, withStyles } from '@material-ui/core';
-import React, { useEffect } from 'react';
-import PhotoViewer from "../components/PhotoViewer";
+import React, { useEffect, useState } from 'react';
+import { Button, Box, Divider, FormControl, FormHelperText, Grid, InputLabel, makeStyles, MenuItem, Select, TextField, withStyles, Paper, SvgIcon } from '@material-ui/core';
+import { ReactComponent as Logo } from "./../components/iconComponent/upload.svg"
+import pics from './../images/DSC_2930.JPG'
+import PhotoViewer from "../components/PhotoViewer"
 import ApprovalViewer from './pages/ApprovalViewer';
-
-
-
-const StyleTableCell = withStyles({
-    root: {
-      fontSize: '12px',
-      padding: '4px 8px 4px 8px',
-    
-    }
-  })(TableCell)
-
-
 const BootstrapButton = withStyles({
     root: {
         boxShadow: 'none',
@@ -122,7 +112,7 @@ const MainMemo1 = (props) => {
                                 }}
                                 style={{ width: '100%' }, { backgroundColor: 'white' }, { margin: '0px' }}
                                 fullWidth
-                                defaultValue={props.rows1 === null ? '' : props.rows1.subject}
+                                defaultValue={props.rows1===null?'':props.rows1.subject}
                                 disabled
 
                             />
@@ -133,7 +123,7 @@ const MainMemo1 = (props) => {
                             <TextField
                                 id="outlined-details-stati"
                                 label="Details:"
-
+                                
                                 multiline
                                 cols={200}
                                 rows={20}
@@ -143,48 +133,39 @@ const MainMemo1 = (props) => {
                                 }}
                                 InputProps={{ disableUnderline: true }}
                                 fullWidth
-                                defaultValue={props.rows1 === null ? '' : props.rows1.details}
+                                defaultValue={props.rows1===null?'':props.rows1.details}
                                 disabled
                             />
                         </Box>
                         <Divider />
-
+                       
 
                         <Box>
-
-                            <PhotoViewer docs={props.docs} />
+                           
+                            <PhotoViewer docs={props.docs}/>
                         </Box>
-                    </Paper>
-                    <div>
-                    {
-                            props.journey.length > 0 ?
-                                <div style={{maxWidth: '100%' }}>
-                                    <div style={{ padding: '20px', maxWidth: '100%', backgroundColor: '#D5FFD5', font: "normal normal 900 18px/13px Avenir" }}>Approval Journey</div>
-                                    <Table>
-                                        <TableHead style={{ font: "normal normal 900 15px/20px Avenir", backgroundColor:'lightgrey', padding:'20px' }}>
-                                            <StyleTableCell align="left" style={{width:'30%'}}>Assigned Officers</StyleTableCell>
-                                            <StyleTableCell align="left" style={{width:'20%'}}>In-Tray</StyleTableCell>
-                                            <StyleTableCell align="left" style={{width:'20%'}}>Out-Tray</StyleTableCell>
-                                            <StyleTableCell align="left" style={{width:'30%'}}>Comment</StyleTableCell>
-
-                                        </TableHead>
-                                    </Table>
-                                    <ApprovalViewer journey={props.journey} />
-                                </div>
-                                :
-                                ""
-
-
-                        }
-
-
-
+                    </Paper> 
+                   <div> 
+                   { 
+                        props.journey?
+                        <div style={{ border: '1px solid blue', maxWidth: '100%' }}>
+                            <div style={{padding:'20px', maxWidth:'100%', backgroundColor:'#D5FFD5',font: "normal normal 900 18px/13px Avenir"}}>Approval Journey</div>
+                            <ApprovalViewer journey={props.journey} />
+                        </div>
+                        :
+                            ""
+                          
+                        
+                    }                       
+                   
+                   
+                    
                     </div>
-
-
-
+                    
+                    
+                    
                 </Box>
-
+                    
             </Box>
         </Box>
     );

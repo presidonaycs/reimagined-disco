@@ -1,17 +1,18 @@
-import { Button, Container, Divider, Grid, makeStyles, Paper, SvgIcon, TextField, withStyles } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { Button, Box, Divider, FormControl, FormHelperText, Grid, InputLabel, makeStyles, MenuItem, Select, TextField, withStyles, Paper, SvgIcon, Container } from '@material-ui/core';
+import SaveAltIcon from '@material-ui/icons/SaveAlt';
+import { ReactComponent as Logo } from "./../iconComponent/upload.svg"
+import LensIcon from '@material-ui/icons/Lens';
+import Brightness1Icon from '@material-ui/icons/Brightness1';
+import { TextareaAutosize } from '@material-ui/core';
 import { IoMdClose } from 'react-icons/io';
+import imaee from './../../images/WIN_20190309_20_47_24_Pro.jpg'
+import imaef from './../../images/WIN_20190309_20_48_16_Pro.jpg'
+import imaeg from './../../images/WIN_20190309_20_48_22_Pro.jpg'
 import httpCommon from '../../httpCommon';
-import imaee from './../../images/WIN_20190309_20_47_24_Pro.png';
-import imaef from './../../images/WIN_20190309_20_48_16_Pro.png';
-import imaeg from './../../images/WIN_20190309_20_48_22_Pro.png';
-import { ReactComponent as Logo } from "./../iconComponent/upload.svg";
-import FrankForm from './FrankForm';
-import SuccessModal from '../../assets/SuccessModal'
-import UploadButton from '../UploadButton';
 
 
-const basePath = "http://devsvr.edogoverp.com"
+
 const BootstrapButton = withStyles({
   root: {
     boxShadow: 'none',
@@ -152,8 +153,10 @@ const RequestReport = (props) => {
 
   
 
-       var List = props.docs
-      
+       var List = [{ fileName: "Picture of Directors office AC", filePath: imaee },
+      { fileName: "Picture of reception/Waiting area", filePath: imaef },
+      { fileName: "Picture of Francis and Nieces", filePath: imaeg }
+      ];
 
   const initiationDate = 'January 19, 2020';
   const initiator = 'Osagie Osaigbovo';
@@ -162,121 +165,36 @@ const RequestReport = (props) => {
   const status = {};
   const approval = [];
   const position = {};
-  
+  const LastDate = 'Wednesday August 12 2020';
   const [upload, setUpload] = useState(null);
-  var [images, setImages] = useState([]);
+  var [images, setImages] = useState(null);
   var [comments, setComments] = useState("");
-  var [refresh, setRefresh] = useState(false);
-  var [error, setError] = useState(false);
-  let [passModal, setPassModal] = useState(false);
-  let [success, setSuccess]=useState(false)
 
 
-
-  
-  let imagg;
-  let namm;
-
-
-  var imgis = {
-    image:'', 
-    name:''
-  }
-  var path=''
-   var facImg = [];
-  
-  const recImagg = (e,n) =>{
-   
-    
-    
-  imgis.image = e;
-  imgis.name = n;
-  facImg.push(imgis);
-  
-  // setImagess(facImg)
-  //setImgState()
-  
-  }
-  
-  
-  
-  
-  console.log(facImg)
-  
-
-  const dispImage = []
-console.log( 'track')
-console.log( images)
-  
     console.log(comments)
     
     const fileHandler = (e) => {
-        var binaryData = [];
-        // setImages(e.target.files[0])
-        binaryData.push(e.target.files[0])
-        const image = new Image();
-        var src = URL.createObjectURL(new Blob(binaryData, {type: "application/text"}));
-        console.log(src);
-        image.src = src;
-        dispImage.push(src)
-        setImages(images.concat(src)) 
-        console.log(dispImage)
+        setImages(e.target.files[0])
     }
-
-const handleCancel=()=>{
-  setError(true);
-}
 
 const onSubmit =()=>{
   console.log(props.id)
   httpCommon.post("ApproveRequest" , {
       requestid:props.id.current,
-      addtionalcomment:comments,
-      details:props.row.details,
-      subject:props.row.subject,
-      requestType:props.row.requestType,
-      approvalJourneyImages:[{image:facImg.image}]
-
+      addtionalcomment:comments
     
   })
-  .then((res)=>{
-    console.log(res)
-    props.handleClose()
-    props.reload()
-  }
-  )
-  
-  
+  .then((res)=>(console.log(res)))
 }
 
-const onClear=()=>{
-  setComments('');
-} 
 
-const setSucceed=()=>{
-  props.setSuccess(true);
-}
-
-const handleSucClose=()=>{
-  setSuccess(false);
-}
-
-const openPassModal=()=>{
-  setPassModal(true)
-}
-
-const closePassModal=()=>{
-  setPassModal(false)
-}
-
-console.log(props.docs)
 
 if(props.show){
   return (
 
     <div className="overlay">
     <IoMdClose className="close-btn pointer" onClick={props.handleClose} />
-    <div className="modal-box" style={{ width: '80vw', fontFamily: 'avenir', backgroundColor: 'transparent', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+    <div className="modal-box" style={{ width: '80vw', fontFamily: 'auto', backgroundColor: 'transparent', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
     <Grid container style={{ display: 'flex' }} alignItems='center' justify='center'  >
 
 <Grid item sm={7} >
@@ -286,7 +204,7 @@ if(props.show){
         <div style={{ width: '100%' }}>
           <TextField
             id="outlined-details-static"
-            label="Subject"
+            label="Subject:"
             multiline
             InputProps={{ disableUnderline: true }}
             rows={2}
@@ -296,7 +214,7 @@ if(props.show){
             style={{ width: '100%' }, { backgroundColor: 'white' }, { margin: '0px' }}
             fullWidth
             disabled
-            value={props.row?.subject}
+            value={props.row.subject}
 
           />
         </div>
@@ -319,13 +237,14 @@ if(props.show){
             value={props.row.details}
           />
         </div>
-                    {/* Last Maintenance Date: {props.row?.lastMaintainanceDate} */}
+                    Last Maintenance Date: {LastDate}
         <Divider />
 
         <Container style={{ margin: '16px 0px 16px 0px' }}>
-          {props.docs?.map((item) => (
-            <div key={item.id} style={{ margin: '16px 0px 16px 0px' }}>
-              <img src={item.filePath} alt={item.fileName}/>
+          {List.map((item) => (
+            <div key={item.name} style={{ margin: '16px 0px 16px 0px' }}>
+              <div>{item.fileName}</div>
+              <div><img src={item.filePath} alt="John" style={{ width: '100%' }}></img></div>
             </div>
           ))}
         </Container>
@@ -335,7 +254,6 @@ if(props.show){
     </div>
 
   </div>
-
   <div style={{ backgroundColor: 'lightgreen', padding: '12px', fontWeight: 'bold' }}>
     Add notes
   </div>
@@ -357,30 +275,35 @@ if(props.show){
     }}
 
   />
-  <FrankForm accept={onSubmit} cancel={handleCancel} show={passModal} handleClose={closePassModal} setSuccess={setSucceed}/>
   <Divider variant='middle' />
-  <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+  <div style={{display:'flex',justifyContent:'space-between'}}>
     <div>
-    <UploadButton width='200px' borderRadius='40px' sendImagg={recImagg}/>
+    <BootstrapButton
+      type='file'
+      variant='contained'
+      component='label'
+      startIcon={<SvgIcon style={{ marginTop: '9px' }}>
+        <Logo />
+      </SvgIcon>}
+    >
+      Upload Supporting Documents
+        <input type='file' accept="image/*" onChange={fileHandler} hidden></input>
+    </BootstrapButton>
     </div>
     <div>
-    <BooButton onClick={openPassModal} refresh={props.refresh}>Submit</BooButton>
-    <BooButton style={{backgroundColor:'grey'}} onClick={onClear}>Clear Entry</BooButton>
+    <BooButton onClick={onSubmit} >Submit</BooButton>
+    <BooButton style={{backgroundColor:'grey'}}>Clear Entry</BooButton>
     <BooButton style={{backgroundColor:'silver', color:'black'}} onClick={props.handleClose} >Close</BooButton>
     </div>
   </div>
-  <div style={{display:'flex', flexDirection:'column', justifyContent:'center' }}>
+  <div>
     {
-      images?.map((item) => (
-        <img key={item} src={item} alt={'broken'} style={{width:'80%', margin:'16px',display:'block'}}></img>
-      ))
-         
-    }
+      <img src={images? URL.createObjectURL(images) : null} alt={images? images.name : null} style={{width:'100%', }}/>   
+        }
   </div>
   </Paper>
 </Grid>
 </Grid>
-<SuccessModal show={success} closeModal={handleSucClose}/>
     </div>
 
   </div>

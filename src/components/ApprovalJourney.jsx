@@ -1,6 +1,5 @@
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, withStyles } from '@material-ui/core';
-import React from 'react';
-import user from './../assets/images/user-avater.png'
+import { TableCell, withStyles,TableContainer,Table,TableBody,TableRow, TableHead, makeStyles } from '@material-ui/core';
+import React from 'react'
 
 const StyleTableCell = withStyles({
   root: {
@@ -9,24 +8,8 @@ const StyleTableCell = withStyles({
   }
 })(TableCell)
 
-const baseURL = 'http://devsvr.edogoverp.com'
 
-function formattedDate(date){
-
-  var year = date.getFullYear();
-  var month = date.getMonth()+1;
-  var day = date.getDate();
-  
-  if (day < 10) {
-    day = '0' + day;
-  }
-  if (month < 10) {
-    month = '0' + month;
-  }
-  
-   return day + '.' + month + '.' + year
-}
-
+ 
 
 
 
@@ -36,7 +19,7 @@ const ApprovalJourney = (props) => {
   const post = props.post;
   const location = props.location;
   const ministry = props.mda;
-  const inTray= props.inTray
+  const inTray=props.inTray
   const outTray=props.outTray
   const inLastModified = props.inLastModified;
   const outLastModified = props.outLastModified;
@@ -45,14 +28,14 @@ const ApprovalJourney = (props) => {
 
 const officer = 
   <div style={{display:'flex'}}>
-    <div style={{borderRadius:'50%',margin:'8px'}}>
-      <img src={(props.image === null) ? user : baseURL.concat(props.image)}/>    
-      </div>
+    <div style={{borderRadius:'50%', width:'100%', height:'100%'}}>
+      <img src={image}></img>
+    </div>
 
-    <div style={{display:'flex', flexDirection:'column',padding:'8px'}}>
-      <div>{props.name}</div>
-      <div>{props.post??""}</div>
-      <div>{props.ministry}</div>
+    <div style={{display:'flex', flexDirection:'column'}}>
+      <div>{name}</div>
+      <div>{post}</div>
+      <div>{ministry}</div>
     </div >
   </div>;
 
@@ -75,7 +58,7 @@ const disOutTray=
     {props.outTray}
   </div>
   <div>
-    {props.outLastModified}
+    {props.outLastastModified}
   </div>
   <div>
     {location}
@@ -84,15 +67,21 @@ const disOutTray=
 
 return(
   <TableContainer style={{backgroundColor:'white'}}>
-    <Table> 
-     
+    <Table>  
+      <TableHead style={{font: "normal normal 900 15px/20px Avenir"}}>
+        <StyleTableCell>Assigned Officers</StyleTableCell>
+        <StyleTableCell>In-Tray</StyleTableCell>
+        <StyleTableCell>Out-Tray</StyleTableCell>
+        <StyleTableCell>Comment</StyleTableCell>
+
+      </TableHead>
       <TableBody>      
       
         <TableRow>
-          <StyleTableCell align="left" style={{width:'30%'}}>{officer}</StyleTableCell>
-          <StyleTableCell align="left" style={{width:'20%'}}>{disInTray}</StyleTableCell>
-          <StyleTableCell align="left" style={{width:'20%'}}>{disOutTray}</StyleTableCell>
-          <StyleTableCell align="left" style={{width:'30%'}}>{comment}</StyleTableCell>
+          <StyleTableCell align="left">{officer}</StyleTableCell>
+          <StyleTableCell align="left">{disInTray}</StyleTableCell>
+          <StyleTableCell align="left">{disOutTray}</StyleTableCell>
+          <StyleTableCell align="left">{comment}</StyleTableCell>
         </TableRow>
         
       </TableBody>        

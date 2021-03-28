@@ -5,48 +5,161 @@
 // import Tables from './components/Tables';
 // import MaintenanceRequestManagement from './pages/MaintenanceRequestManagement';
 // import Header1 from './components/Header1';
-import React from 'react';
-import { LoadingOutlined, SmileOutlined, UserOutlined } from '@ant-design/icons';
-import { Steps } from 'antd';
 
-import { RiBarChartFill, RiUserSettingsLine } from 'react-icons/ri';
-import { BiEnvelope } from 'react-icons/bi';
-import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
-import ReceiptIcon from '@material-ui/icons/Receipt';
-import SettingsIcon from '@material-ui/icons/Settings';
-import PersonIcon from '@material-ui/icons/Person';
-import LockOpenIcon from '@material-ui/icons/LockOpen';
-
+import React, { useContext, useState, useEffect, useRef } from 'react';
+import { Table, Input, Button} from 'antd';
+import { Steps, Divider } from 'antd';
+import { UserOutlined, SolutionOutlined, LoadingOutlined, SmileOutlined } from '@ant-design/icons';
+ 
 
 function ApprovalJourney(prop) {
-    const Array = [
+    const dataSource = [
         {
-            name:"Ehigiamouse Emmanuel, DOAS",
-            time:"2 months",
-            Picture:<img src=".\logo512.png" width="20" height="20" style={{border:"2px solid red"}} />,
-            title:"",
-            statusFInish:"finish",
-            statusProcess:"process",
-            statusWait:"wait"
-        }
-    ]
-    const { Step } = Steps;
+          key: '1',
+          name: [{
+              name:'Mike',
+              picture:"./Images/logo512.png",
+              desc:"Lorem ipsum"
+          }],
+          inTray: [{
+            date:'Aug 26 1993',
+            lastSeen:"5 months ago",
+            post:"Lorem ipsum"
+        }],
+          outTray:[{
+            date:'Aug 26 1993',
+            lastSeen:"5 months ago",
+            post:"Lorem ipsum"
+        }],
+          comment: 'Lorem Ipsum'
+        },
+        {
+          key: '2',
+          name: [{
+            name:'John',
+            picture:"./Images/logo512.png",
+            desc:"Lorem ipsum"
+        }],
+          inTray: [{
+            date:'Aug 26 1993',
+            lastSeen:"5 months ago",
+            post:"Lorem ipsum"
+        }],
+          outTray: [{
+            date:'Aug 26 1993',
+            lastSeen:"5 months ago",
+            post:"Lorem ipsum"
+        }],
+          comment: 'Lorem Ipsum'
+        },
+      ];
+      
+      const columns = [
+        {
+          title: 'name',
+          dataIndex: 'name',
+          key: 'name',
+          render: name => (
+            <>
+              {name.map(tag => {
+              
+                return (
+                  <>
+                  <div className='flex-align'>
+                  <p><img width='30' height='30' src={tag.picture}/></p>
+                      <div style={{marginLeft:"10px"}}>
+                          <p>{tag.name}</p> 
+                       
+                        <p>{tag.desc}</p>
+                      </div>
+                  </div>
+                  </>
+                );
+              })}
+            </>
+          )
+        },
+        
+        {
+          title: 'In-tray',
+          dataIndex: 'inTray',
+          key: 'inTray',
+          render: name => (
+            <>
+              {name.map(tag => {
+              
+                return (
+                  <>
+                  <div className=''>
+                <p>{tag.date}</p>
+                          <p>{tag.lastSeen}</p> 
+                        <p>{tag.post}</p>
+                     
+                  </div>
+                  </>
+                );
+              })}
+            </>
+          )
+        },
+        {
+          title: 'Out-tray',
+          dataIndex: 'outTray',
+          key: 'outTray',
+          render: name => (
+            <>
+              {name.map(tag => {
+              
+                return (
+                  <>
+                  <div className=''>
+                <p>{tag.date}</p>
+                          <p>{tag.lastSeen}</p> 
+                        <p>{tag.post}</p>
+                     
+                  </div>
+                  </>
+                );
+              })}
+            </>
+          )
+        },
+        {
+            title: 'Comment',
+            dataIndex: 'comment',
+            key: 'comment',
+          },
+      ];
+      
+const [toggle, setToggle] = useState(false)
 
-  return (
+const handleToggle = ()=>{
+setToggle(!toggle)
+}
 
-    <div>
-  <div className="steps">
-  <Steps direction="vertical" current={3}>
-    <Step status="finish" title="Login" icon={<RiUserSettingsLine className="icon" style={{color:'#4AD991'}}/>} />
-    <Step status="finish" title="Verification" icon={<ReceiptIcon className="icon" style={{color:'#A3A1FB'}}/>} />
-    <Step status="process" title="Pay" icon={<LockOpenIcon />} style={{color:'#FF7285'}}/>
-    <Step status="wait" title="Done" icon={<QuestionAnswerIcon style={{color:'#FFCA83'}}/>} />
-    <Step status="finish" title="Verification" icon={<ReceiptIcon className="icon" style={{color:'#A3A1FB'}}/>} />
-    
-  </Steps>
-  </div>
-    </div>
-  );
+    return (
+
+       <div className="ApprovalJourney">
+           { (!toggle) ? <div className="flex-align flex-between" style={{backgroundColor:"#D5FFD5", padding:"10px"}}>
+                <h4 style={{fontWeight:"bold"}}>Approval Journey</h4>
+                <Button onClick={handleToggle} style={{backgroundColor:"#EFD66BF2", color:"black"}}>View Querries and responses</Button>
+            </div>
+:
+            <div>
+              <div className="flex-align flex-between" style={{backgroundColor:"#D5FFD5", padding:"10px"}}>
+                  <h4 style={{fontWeight:"bold"}}>Approval Journey</h4>
+                  <Button onClick={handleToggle} style={{backgroundColor:"#1C811C", color:"white"}}>Collapse Querries and responses</Button>
+              </div>
+          <Table
+           dataSource={dataSource}
+            columns={columns} />
+            </div>
+          }
+        
+        </div>
+    );
 }
 
 export default ApprovalJourney;
+
+

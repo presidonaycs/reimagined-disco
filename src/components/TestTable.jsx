@@ -1,7 +1,8 @@
+import React from 'react';
 import { Table } from 'antd';
-import React, { useEffect, useState } from 'react';
-import http from './../httpCommon';
-import SplitsButton from './../input/SplitsButton';
+import http from './../httpCommon'
+import {useState, useEffect} from 'react'
+import SplitsButton from './../input/SplitsButton'
 
 
 const TestTable = () => {

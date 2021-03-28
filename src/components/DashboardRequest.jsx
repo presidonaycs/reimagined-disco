@@ -1,9 +1,8 @@
-import { Box, Button, Divider, Paper, TextField, withStyles } from '@material-ui/core';
-import React, { useEffect } from 'react';
-import PhotoViewer from "../components/PhotoViewer";
-import Cookies from "universal-cookie";
-
-
+import React, { useEffect, useState } from 'react';
+import { Button, Box, Divider, FormControl, FormHelperText, Grid, InputLabel, makeStyles, MenuItem, Select, TextField, withStyles, Paper, SvgIcon } from '@material-ui/core';
+import { ReactComponent as Logo } from "./../components/iconComponent/upload.svg"
+import pics from './../images/DSC_2930.JPG'
+import PhotoViewer from "../components/PhotoViewer"
 const BootstrapButton = withStyles({
     root: {
         boxShadow: 'none',
@@ -87,7 +86,6 @@ const TextArea = withStyles({
     }
 })(TextField)
 
-    
 
 const MainMemo1 = (props) => {
     console.log('main memo called')
@@ -114,7 +112,6 @@ const MainMemo1 = (props) => {
                                 style={{ width: '100%' }, { backgroundColor: 'white' }, { margin: '0px' }}
                                 fullWidth
                                 value={props.rows1?.subject??""}
-                                disabled
 
 
                             />
@@ -136,7 +133,6 @@ const MainMemo1 = (props) => {
                                 InputProps={{ disableUnderline: true }}
                                 fullWidth
                                 value={props.rows1?.details?? ""}
-                                disabled
 
                             />
                         </Box>

@@ -1,10 +1,13 @@
-import { Box, Button, Card, Divider, FormControl, Grid, InputLabel, makeStyles, MenuItem, Paper, Select, SvgIcon, TextField, withStyles } from '@material-ui/core';
-import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import React, { useEffect, useState } from 'react';
-import http from '../httpCommon';
-import { ReactComponent as Circle } from "./../components/iconComponent/circle-fill.svg";
-import ApprovalJourney from './ApprovalJourney';
+import { Button, Box, Divider, FormControl, FormHelperText, Grid, InputLabel, Card, makeStyles, MenuItem, Select, TextField, withStyles, Paper, SvgIcon } from '@material-ui/core';
+import { ReactComponent as Logo } from "./../components/iconComponent/upload.svg"
+import { ReactComponent as Circle } from "./../components/iconComponent/circle-fill.svg"
+import SaveAltIcon from '@material-ui/icons/SaveAlt';
+import Request from './MainMemo';
+import MemoSide from './MemoSide';
 import LocationDetails from './layouts/LocationDetails';
+import http from '../httpCommon'
+import ApprovalJourney from './ApprovalJourney';
 
 
 

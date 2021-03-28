@@ -1,9 +1,16 @@
-import { Box, Card, Divider, FormControl, InputLabel, makeStyles, MenuItem, Paper, Select, SvgIcon } from '@material-ui/core';
+import React from 'react'
+import { Button, Box, Divider, FormControl, FormHelperText, Grid, InputLabel, makeStyles, MenuItem, Select, TextField, withStyles, Paper, SvgIcon, Card, CardContent } from '@material-ui/core';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
-import React from 'react';
-import { ReactComponent as Circle } from "./../components/iconComponent/circle-fill.svg";
-import Stepz from './Steps';
-import Cookies from "universal-cookie";
+import { ReactComponent as Logo } from "./../components/iconComponent/upload.svg"
+import LensIcon from '@material-ui/icons/Lens';
+import Brightness1Icon from '@material-ui/icons/Brightness1';
+import { TextareaAutosize } from '@material-ui/core';
+import Greeting from './Greeting';
+import Link from '@material-ui/core/Link';
+import { ReactComponent as Circle } from "./../components/iconComponent/circle-fill.svg"
+import { faCircle } from '@fortawesome/free-solid-svg-icons';
+import Stepz  from './Steps';
+
 
 
 const useStyles = makeStyles({
@@ -17,7 +24,7 @@ const useStyles = makeStyles({
     myDivs: {
         fontSize: '14px',
         marginTop: '12px',
-        fontFamily: 'avenir',
+        fontFamily: 'auto',
     },
     innerDiv: {
         display: 'flex',
@@ -43,11 +50,11 @@ export default function MemoSideDashboard( props) {
     const status = {};
     const approval = [];
     const position = {};
+    const [category, setCategory] = React.useState(1);
   
-  
-    let cookies = new Cookies();
-   
-   
+    const handleChange = event => {
+    setCategory(event.target.value);
+};
 
     const chkStatus = (status) => {
         if(status === 'Pending')
@@ -59,7 +66,7 @@ export default function MemoSideDashboard( props) {
         else
         return {color:'#BEBCBD', margin: '2px', fontSize: "12px"}
       }
-      
+
    
 
     return (
@@ -67,7 +74,7 @@ export default function MemoSideDashboard( props) {
             <div style={{ width: '21.5vw' }}>
 
                 <div className={classes.root}>
-                    <Card style={{ marginBottom: '1vw', justifyContent: 'space-between' }}>
+                    <Card style={{ marginBottom: '1vw', height: '13vw', justifyContent: 'space-between' }}>
                         <Box style={{ backgroundColor: 'white' }, { borderRadius: '3px' }, { margin: '20px' }}>
                             <Box style={{ margin: '10px 0px 10px 0px' }}>
                                 <FormControl className={classes.formControl} >
@@ -78,15 +85,16 @@ export default function MemoSideDashboard( props) {
                                         labelId="demo-simple-select-placeholder-label-label"
                                         id="demo-simple-select-placeholder-label"
                                         disabled
-                                        value={props.rows1?.requestCategoryId ? props.rows1?.requestCategoryId : ""}
+                                        value={category}
                                         displayEmpty
                                         disableUnderline
                                         style={{ width: '20vw' }}
+                                        onChange={handleChange}
                                         className={classes.selectEmpty}
                                         
                                     >
-                                        <MenuItem value={1}>
-                                            Facility Maintenance
+                                        <MenuItem selected value={1} >
+                                            <span style={{ fontSize: '16px' }}>Facility Maintenance</span>
                                         </MenuItem>
                                         <MenuItem value={2}>Energy & Power Maintenance</MenuItem>
                                         <MenuItem value={3}>Office Equipment</MenuItem>
@@ -97,8 +105,9 @@ export default function MemoSideDashboard( props) {
                             </Box>
 
                             <Divider style={{ margin: '0px 0px 0px 0px' }} />
-                            <Box className={classes.myDivs} ><span style={{ fontWeight: 'bolder', size: '18vw',  margin: '10px 0px 10px 0px' }}> Memo initiation date: </span> {props.rows1?.memoInitiationDate??""}</Box>
-                            <Box className={classes.myDivs}> <span style={{ fontWeight: 'bolder', size: '18vw',size:'18vw', margin: '10px 0px 10px 0px' }}>Memo initiator:</span> {props.rows1?.memoInitiator??""}</Box>
+                            <Box className={classes.myDivs} fontSize='12px'><span style={{ fontWeight: 'bolder', size: '18vw',  margin: '10px 0px 10px 0px' }}> Memo initiation date: </span> {props.rows1?.memoInitiationDate??""}</Box>
+                            <Box className={classes.myDivs}> <span style={{ fontWeight: 'bolder', size: '18vw',fontSize:'12px', margin: '10px 0px 10px 0px' }}>Memo initiator:</span> {props.rows1?.memoInitiator??""}</Box>
+                            <Box className={classes.myDivs}> <span style={{ fontWeight: 'bolder', size: '18vw',fontSize:'12px', margin: '10px 10px 20px 0px' }}>View Memo:</span></Box>
                         </Box>
                     </Card>
                     <Card style={{ marginBottom: '1vw' }}>
@@ -125,9 +134,8 @@ export default function MemoSideDashboard( props) {
                              </Box>
                        
                     </Paper>
-                    <Stepz  sequence2={props?.sequence1} current={props.rows1.currentApprovalStage}/>
-                    {console.log(props.rows1.currentApprovalStage)}
-                    {console.log("checks")}
+                    <Stepz />
+
                 </div>
 
             </div>

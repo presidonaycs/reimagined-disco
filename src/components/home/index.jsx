@@ -4,9 +4,9 @@ import coatOfArm from '../../assets/images/coat-of-arm.png';
 import Footer from '../layouts/Footer';
 import http from "./../../httpAuth"
 import Cookies from "universal-cookie"
-import { CookiesProvider } from "react-cookie";
 
-const cookies = new Cookies();
+
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -15,7 +15,11 @@ class Home extends Component {
       password:'',
     };
   }
+ 
+  handle=()=>{
   
+  }
+
   handleOnPassChange = () =>{
 
   }
@@ -25,23 +29,10 @@ handleOnChange = (e) => {
   }
 
   handleSignin = async () => {
-    
-    
     const { history } = this.props;
+    history.push('/adminstore-portal')
+    const cookies = new Cookies();
           let url = "get-current-User"
-
-          if(navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                cookies.set("Latitude", position.coords.latitude??"", {path:"/"})
-                console.log(position.coords.latitude)
-                console.log(position.coords.longitude)
-      
-                cookies.set("Longitude", position.coords.longitude??"", {path:"/"})
-            });
-        } else {
-            alert("Sorry, your browser does not support HTML5 geolocation.");
-        }
-
 
       console.log(url)
       
@@ -53,26 +44,18 @@ handleOnChange = (e) => {
 
         })
           .then((response) => {
-            
             console.log('server')
             console.log(response.data)
             console.log("yess")
-            cookies.set("mda", response.data.data.mda??'', {path:"/"})
-            cookies.set("firstName", response.data.data.firstName??'', {path:"/"})
-            cookies.set("lastName", response.data.data.lastName??"", {path:"/"})
-            cookies.set("token", response.data.token??"", {path:"/"})
-            cookies.set("staffNumber", response.data.data.staffNumber??"", {path:"/"})
-            cookies.set("lastLoginTime", response.data.data.lastLoginTime??"", {path:"/"})
-            cookies.set("userSequence", response.data.data.userSequence??"", {path:"/"})
-            if(response.data.data.roles !== null){
-              cookies.set("userRole", response.data.data.roles[0].name??"", {path:"/"})
-            }
-            cookies.set("userId", response.data.data.userId??"", {path:"/"})
+            cookies.set("mda", response.data.data?.mda===undefined?'':response.data.data?.mda, {path:"/"})
+            cookies.set("firstName", response.data.data?.firstName===undefined?'':response.data.data?.firstName, {path:"/"})
+            cookies.set("lastName", response.data.data?.lastName===undefined?'':response.data.data?.lastName, {path:"/"})
+            cookies.set("token", response.data?.token===undefined?'':response.data.data?.token, {path:"/"})
+            cookies.set("staffNumber", response.data.data?.staffNumber===undefined?'':response.data.data?.staffNumber, {path:"/"})
+            cookies.set("lastLoginTime", response.data.data?.lastLoginTime===undefined?'':response.data.data?.lastLoginTime, {path:"/"})
+            history.push('/adminstore-portal')
 
 
-
-            
-            history.push('/facility-portal');
 
 
 
@@ -83,14 +66,14 @@ handleOnChange = (e) => {
     
           })
     
-    
-           
-
-
+      
+      console.log(cookies.get("lastName"))
+      console.log(cookies.get("token"))
+   
+      
   }
 
-
-  
+ 
 
   render() {
     

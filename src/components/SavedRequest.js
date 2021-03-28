@@ -1,11 +1,8 @@
-import { Button, IconButton, Tooltip, withStyles } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
+import { Button, IconButton, withStyles } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
-import React from 'react';
-import { VictoryTooltip } from 'victory';
-import { useState } from "react";
-import AreYouSure from '../assets/AreYouSure'
+import DeleteIcon from '@material-ui/icons/Delete';
 
+import React from 'react'
 const BooButton = withStyles({
     root: {
         boxShadow: 'none',
@@ -42,22 +39,9 @@ const BooButton = withStyles({
 })(Button);
 
 export default function SavedRequest(props) {
-
-    let [sureModal, setSureModal] = useState(false)
-
-
-    const areYouSure=()=>{
-        setSureModal(true);
-    }
-
-  const  handleClose=()=>{
-        setSureModal(false);
-    }
-
-
     return (
         <div style={{display:'flex', justifyContent:'space-between', backgroundColor:'white', alignItems:'center', padding:'2px',}}>
-            <div style={{ width:'600px',display:'flex', wordBreak:'break-word', font:"normal normal normal 17px/25px Avenir", marginLeft:'16px'} }>
+            <div style={{ width:'600px',display:'flex', wordBreak:'break-word', fontSize:'15px', marginLeft:'16px'} }>
                 {props.title}
             </div>
             <div style={{display:'flex'}}>
@@ -65,17 +49,12 @@ export default function SavedRequest(props) {
                     <BooButton onClick={props.handleSubmit}>Submit Request</BooButton>
                 </div>
                 <div style={{marginLeft:'3px'}}>
-                <Tooltip title="Edit" placement="top">
                    <IconButton onClick={props.handleEdit}><EditIcon style={{backgroundColor:'lightgreen',borderRadius:'2px', fontSize:'25px'}}/></IconButton> 
-                </Tooltip>
                 </div>
                 <div style={{marginLeft:'0px'}}>
-                <Tooltip title="Delete" placement="top">
-                    <IconButton onClick={areYouSure}><DeleteIcon style={{backgroundColor:'pink',borderRadius:'2px', fontSize:'25px'}}/></IconButton>
-                </Tooltip>
+                    <IconButton onClick={props.handleDelete}><DeleteIcon style={{backgroundColor:'pink',borderRadius:'2px', fontSize:'25px'}}/></IconButton>
                 </div>
             </div>
-            <AreYouSure show={sureModal} closeModal={handleClose} handleDelete={props.handleDelete}/>
         </div>
     )
 }

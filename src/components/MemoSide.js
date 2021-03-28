@@ -1,10 +1,15 @@
-import { Box, Card, Divider, FormControl, InputLabel, makeStyles, MenuItem, Paper, Select, SvgIcon } from '@material-ui/core';
+import React from 'react'
+import { Button, Box, Divider, FormControl, FormHelperText, Grid, InputLabel, makeStyles, MenuItem, Select, TextField, withStyles, Paper, SvgIcon, Card, CardContent } from '@material-ui/core';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
-import React from 'react';
-import { ReactComponent as Circle } from "./../components/iconComponent/circle-fill.svg";
-import Stepz from './Steps';
-import Cookies from "universal-cookie"
-
+import { ReactComponent as Logo } from "./../components/iconComponent/upload.svg"
+import LensIcon from '@material-ui/icons/Lens';
+import Brightness1Icon from '@material-ui/icons/Brightness1';
+import { TextareaAutosize } from '@material-ui/core';
+import Greeting from '../components/Greeting';
+import Link from '@material-ui/core/Link';
+import { ReactComponent as Circle } from "./../components/iconComponent/circle-fill.svg"
+import { faCircle } from '@fortawesome/free-solid-svg-icons';
+import Stepz  from './Steps';
 
 
 
@@ -19,7 +24,7 @@ const useStyles = makeStyles({
     myDivs: {
         fontSize: '14px',
         marginTop: '12px',
-        fontFamily: 'avenir',
+        fontFamily: 'auto',
     },
     innerDiv: {
         display: 'flex',
@@ -29,16 +34,13 @@ const useStyles = makeStyles({
         padding: '6px',
 
         borderRadius: '3px',
-        fontFamily: 'avenir'
+        fontFamily: 'auto'
 
     },
 
 })
 
-let cookies = new Cookies();
-
-
-export default function MemoSide(props) {
+export default function MemoSide({onChange}, props) {
 
     const classes = useStyles();
     const initiationDate = 'January 19, 2020';
@@ -49,27 +51,10 @@ export default function MemoSide(props) {
     const approval = [];
     const position = {};
 
-    function formattedDate(date){
-
-      var year = date.getFullYear();
-      var month = date.getMonth()+1;
-      var day = date.getDate();
-      
-      if (day < 10) {
-        day = '0' + day;
-      }
-      if (month < 10) {
-        month = '0' + month;
-      }
-      
-       return day + '.' + month + '.' + year
-    }
-
     if(status==='pending'){
         
     }
-
-
+    
 
 
 
@@ -88,28 +73,29 @@ export default function MemoSide(props) {
                                     <Select
                                         labelId="demo-simple-select-placeholder-label-label"
                                         id="demo-simple-select-placeholder-label"
-                                        value={props.rows1?.requestCategoryId ? props.rows1?.requestCategoryId : ""}
+                                        // value={props.rows1.requestCategoryId}
+                                        onSelect={onChange}
                                         displayEmpty
                                         disableUnderline
-                                        // value= {props.rows1.requestcategoryid}
                                         style={{ width: '20vw' }}
                                         className={classes.selectEmpty}
                                         disabled
                                     >
-                                        <MenuItem value={1} >
-                                        <span style={{ fontSize: '14px' }}>Facility Maintenance</span>
+                                        <MenuItem value={'Facility Maintenance'} >
+                                            <span style={{ fontSize: '16px' }}>Facility Maintenance</span>
                                         </MenuItem>
-                                        <MenuItem value={2}><span style={{ fontSize: '14px' }}>Energy & Power Maintenance</span></MenuItem>
-                                        <MenuItem value={3}><span style={{ fontSize: '14px' }}>Office Equipment</span></MenuItem>
-                                        <MenuItem value={4}><span style={{ fontSize: '14px' }}>Office Space Request</span></MenuItem>
-                                        <MenuItem value={5}><span style={{ fontSize: '14px' }}>Work Space Management</span></MenuItem>
+                                        <MenuItem value={'Energy & Power Maintenance'}>Energy & Power Maintenance</MenuItem>
+                                        <MenuItem value={'Office Equipment'}>Office Equipment</MenuItem>
+                                        <MenuItem value={'Ofice Space Request'}>Office Space Request</MenuItem>
+                                        <MenuItem value={'Work Space Management'}>Work Space Management</MenuItem>
                                     </Select>
                                 </FormControl>
                             </Box>
 
                             <Divider style={{ margin: '0px 0px 0px 0px' }} />
-                            <Box className={classes.myDivs} ><span style={{ fontWeight: 'bolder', margin: '10px 0px 10px 0px', fontSize:'14px' }}> Memo initiation date: {formattedDate(new Date())} </span> </Box>
-                      <Box className={classes.myDivs}> <span style={{ fontWeight: 'bolder', fontSize: '14px', margin: '10px 10px 10px 0px' }}>Memo initiator: {cookies.get("firstName")} {cookies.get("lastName")}</span> </Box>
+                            <Box className={classes.myDivs} fontSize='12px'><span style={{ fontWeight: 'bolder', size: '18vw',  margin: '10px 0px 10px 0px' }}> Memo initiation date: </span> {props.initiationDate}</Box>
+                            <Box className={classes.myDivs}> <span style={{ fontWeight: 'bolder', size: '18vw',fontSize:'12px', margin: '10px 0px 10px 0px' }}>Memo initiator:</span> {props.memoInitiator}</Box>
+                            <Box className={classes.myDivs}> <span style={{ fontWeight: 'bolder', size: '18vw',fontSize:'12px', margin: '10px 10px 20px 0px' }}>View Memo:</span> </Box>
                         </Box>
                     </Card>
                     <Card style={{ marginBottom: '1vw' }}>
@@ -129,14 +115,14 @@ export default function MemoSide(props) {
                     <Paper style={{ justifyContent: 'space-between', alignItems:'flex-start' }} >
                       
                             <Box style={{ display: 'flex', alignItems: 'center',paddingLeft:'1vw' }}>
-                                <Box style={{ fontWeight: 'bolder'}, { paddingRight: '13px' }, { fontSize: '14px' }}>Status:
+                                <Box style={{ fontWeight: 'bolder'}, { paddingRight: '13px' }, { fontSize: '16px' }}>Status:
                                  </Box> 
-                                  <Box style={{ paddingLeft: '1vw' }}><SvgIcon style={{ marginTop: '16px', fontSize: '25px', color:'#FDCC29' }}><Circle /></SvgIcon>
+                                  <Box style={{ paddingLeft: '1vw' }}><SvgIcon style={{ marginTop: '16px', fontSize: '25px' }}><Circle /></SvgIcon>
                                 </Box>
                              </Box>
                        
                     </Paper>
-                    <Stepz sequence2={props?.sequence1} current={props.rows1.currentApprovalStage}/>
+                    <Stepz />
 
                 </div>
 

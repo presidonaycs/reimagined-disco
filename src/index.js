@@ -4,11 +4,11 @@ import './assets/css/pages-icons.css';
 import './assets/css/pages-sidebar.css';
 import './assets/css/index.css';
 import './assets/css/general.css';
-import 'antd/dist/antd.css';
-import reportWebVitals from './reportWebVitals';
+// import reportWebVitals from './reportWebVitals';
 import { colors, createMuiTheme, ThemeProvider } from '@material-ui/core';
 import { green, red } from '@material-ui/core/colors';
 import App from './App';
+import { CookiesProvider } from "react-cookie";
 
 
 
@@ -38,7 +38,9 @@ const theme = createMuiTheme({
 ReactDOM.render(
 
   <ThemeProvider theme={theme}>
+    <CookiesProvider>
     <App />
+    </CookiesProvider>
   </ThemeProvider>,
   document.getElementById('root')
 );
@@ -46,4 +48,4 @@ ReactDOM.render(
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-
+// reportWebVitals();

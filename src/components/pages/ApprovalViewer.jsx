@@ -13,7 +13,7 @@ const ApprovalViewer = props => {
 else{
     return props.journey.map(item => {
             
-        return <ApprovalJourney key={item.inTray} image={item.profilePic} name={item.assignedOfficer} location={item.location} ministry={item.mda} inTray={item.inTray} outTray={item.outTray} inLastModified={item.inLastModified} outLastModified={item.outLastModified} comment={item.comment}/>;
+        return <ApprovalJourney key={item.profilePic} image={item.profilePic} name={item.assignedOfficer} location={item.location} ministry={item.mda} inTray={item.inTray} outTray={item.outTray} inLastModified={item.inLastModified} outLastModified={item.outLastModified} comment={item.comment}/>;
     })
 }
        
